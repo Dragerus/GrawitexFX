@@ -5,6 +5,7 @@
  */
 package grawitexfx;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,9 +34,13 @@ public class Grawitex extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
-
-        
+        System.out.println("Hello world");    
+        //launch(args);
+        String path = "/home/szymon/NetBeansProjects/GrawitexFX/data/small_data.in";
+        ArrayList<Planet> a = new PlanetDataReader().readPlanets(path);  
+        for(Planet x : a){
+            System.out.println(x);
+        }
     }
     
 }
