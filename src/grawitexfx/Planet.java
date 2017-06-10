@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author adam
  */
 public class Planet {
-    private static final double gravitationalConstant = 6.6740831e-11;
+    public static final double GRAVITATIONAL_CONSTANT = 6.6740831e-11;
     
     private String name;
     private Vector velocity;
@@ -25,12 +25,17 @@ public class Planet {
         this.velocity = velocity;
         this.position = position;
         this.mass = mass;
-        this.acceleration = new Vector(0.0, 0.0, 0.0);
+        this.acceleration = new Vector();
     }
     
     public void calculateGravity(Planet otherPlanet) {
-        double gravity = otherPlanet.mass * gravitationalConstant;
-        Vector gravityVector = this.position.subtract(otherPlanet.position).scale(gravity);
+        Vector direction = otherPlanet.position.subtract(this.position);
+        Vector directionNormalized = direction.normalize();
+        double distance = direction.length();
+        double gravity = (otherPlanet.mass * GRAVITATIONAL_CONSTANT)
+                / (distance * distance);
+        Vector gravityVector = directionNormalized.scale(gravity);
+        
         this.acceleration = this.acceleration.add(gravityVector);
     }
     
@@ -45,6 +50,8 @@ public class Planet {
     public Vector getPosition() {return this.position;}
     
     public double getMass() {return this.mass;}
+    
+    public Vector getAcceleration() {return this.acceleration;}
 
     @Override
     public int hashCode() {
@@ -89,6 +96,5 @@ public class Planet {
         }
         return true;
     }
-    
     
 }

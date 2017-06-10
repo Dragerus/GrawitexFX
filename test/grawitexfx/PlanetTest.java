@@ -18,8 +18,33 @@ public class PlanetTest {
     }
 
     @Test
-    public void testApplyForce() {
-        
+    public void shouldGravitatePlanetsTowardsEachOther() {
+        Planet a = new Planet(
+                "A",
+                1000000000,
+                new Vector(0, 1, 2),
+                new Vector()
+        );
+        Planet b = new Planet(
+                "B",
+                2000000000,
+                new Vector(-2, 2, 0),
+                new Vector()
+        );
+        Vector expectedAccelerationA = new Vector(
+                -2.0/3.0,
+                1.0/3.0,
+                -2.0/3.0
+        ).scale(b.getMass() * Planet.GRAVITATIONAL_CONSTANT / 9.0);
+        Vector expectedAccelerationB = new Vector(
+                2.0/3.0,
+                -1.0/3.0,
+                2.0/3.0
+        ).scale(a.getMass() * Planet.GRAVITATIONAL_CONSTANT / 9.0);
+        a.calculateGravity(b);
+        b.calculateGravity(a);
+        assertEquals(expectedAccelerationA, a.getAcceleration());
+        assertEquals(expectedAccelerationB, b.getAcceleration());
     }
 
     @Test

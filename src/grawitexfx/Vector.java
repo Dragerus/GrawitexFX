@@ -5,6 +5,8 @@
  */
 package grawitexfx;
 
+import java.lang.Math;
+
 /**
  *
  * @author adam
@@ -12,7 +14,11 @@ package grawitexfx;
 public class Vector {
     public double x, y, z;
     
-    public Vector() {}
+    public Vector() {
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+    }
     public Vector(double x, double y, double z) {
         this.x = x;
         this.y = y;
@@ -42,7 +48,21 @@ public class Vector {
                 this.z * scale
         );
     }
-
+    
+    public double length() {
+        return Math.sqrt(x * x + y * y + z * z);
+    }
+    
+    public Vector normalize() {
+        double length = this.length();
+        
+        return new Vector(
+                x / length,
+                y / length,
+                z / length
+        );
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -75,6 +95,9 @@ public class Vector {
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Vector{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
+    }
 }
