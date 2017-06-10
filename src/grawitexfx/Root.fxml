@@ -20,7 +20,7 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="625.0" layoutY="448.0" mnemonicParsing="false" onMouseClicked="#ImportDataFromFile" text="Importuj dane układu..." />
+                  <Button fx:id="importDataButton" layoutX="625.0" layoutY="448.0" mnemonicParsing="false" onMouseClicked="#ImportDataFromFile" text="Importuj dane układu..." />
                   <Button layoutX="440.0" layoutY="448.0" mnemonicParsing="false" onMouseClicked="#ImportDataFromFile" text="Eksportuj dane układu..." />
                   <TableView layoutX="28.0" layoutY="14.0" prefHeight="434.0" prefWidth="738.0">
                     <columns>
