@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -20,9 +21,9 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="625.0" layoutY="448.0" mnemonicParsing="false" onMouseClicked="#ImportDataFromFile" text="Importuj dane układu..." />
-                  <Button layoutX="440.0" layoutY="448.0" mnemonicParsing="false" onMouseClicked="#ImportDataFromFile" text="Eksportuj dane układu..." />
-                  <TableView layoutX="28.0" layoutY="14.0" prefHeight="434.0" prefWidth="738.0">
+                  <Button layoutX="625.0" layoutY="448.0" mnemonicParsing="false" onMouseClicked="#importDataFromFile" text="Importuj dane układu..." />
+                  <Button layoutX="440.0" layoutY="448.0" mnemonicParsing="false" onMouseClicked="#exportDataToFile" text="Eksportuj dane układu..." />
+                  <TableView fx:id="PlanetDataTable" layoutX="28.0" layoutY="14.0" prefHeight="434.0" prefWidth="738.0">
                     <columns>
                       <TableColumn maxWidth="400.0" minWidth="150.0" prefWidth="175.0" text="Nazwa planety" />
                         <TableColumn prefWidth="101.0" text="Masa" />
@@ -38,12 +39,12 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ChoiceBox layoutX="379.0" layoutY="64.0" prefWidth="150.0" />
-                  <ChoiceBox layoutX="379.0" layoutY="116.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="SimTimeChoice" layoutX="379.0" layoutY="64.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="SimStepChoice" layoutX="379.0" layoutY="116.0" prefWidth="150.0" />
                   <Label layoutX="3.0" layoutY="121.0" text="Krok czasowy symulacji:" />
                   <Label layoutX="57.0" layoutY="69.0" text="Czas symulacji: " />
-                  <TextField layoutX="187.0" layoutY="116.0" />
-                  <TextField layoutX="187.0" layoutY="64.0" />
+                  <TextField fx:id="SimStepText" layoutX="187.0" layoutY="116.0" />
+                  <TextField fx:id="SimTimeText" layoutX="187.0" layoutY="64.0" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -51,7 +52,12 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Canvas height="465.0" layoutX="14.0" layoutY="14.0" width="783.0" />
+                  <Canvas fx:id="SimulationCanvas" height="410.0" layoutX="11.0" layoutY="69.0" width="786.0" />
+                  <Button layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#simulationStart" prefHeight="30.0" prefWidth="55.0" text="Start" />
+                  <Button layoutX="86.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#simulationStop" prefHeight="30.0" prefWidth="55.0" text="Stop" />
+                  <Button layoutX="159.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#simulationReset" prefHeight="30.0" prefWidth="55.0" text="Reset" />
+                  <Slider fx:id="SimulationSpeedSlider" layoutX="365.0" layoutY="21.0" prefHeight="16.0" prefWidth="385.0" />
+                  <Label layoutX="230.0" layoutY="21.0" text="Szybkość symulacji" />
                </children></AnchorPane>
          </content>
       </Tab>
@@ -59,7 +65,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <LineChart accessibleText="EnergyChart" layoutY="2.0" prefHeight="482.0" prefWidth="810.0" title="EnergyChart">
+                  <LineChart fx:id="EnergyChart" accessibleText="EnergyChart" layoutY="2.0" prefHeight="482.0" prefWidth="810.0" title="EnergyChart">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>

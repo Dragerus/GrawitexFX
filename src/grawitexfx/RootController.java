@@ -7,8 +7,19 @@ package grawitexfx;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.chart.LineChart;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -16,18 +27,90 @@ import javafx.fxml.Initializable;
  */
 public class RootController implements Initializable {
     
+    private boolean simSpeedActualiseEnabled = false;
+    
+    @FXML
+    public ChoiceBox<String> SimTimeChoice;
+    
+    @FXML
+    public ChoiceBox<String> SimStepChoice;
+    @FXML
+    public TextField SimTimeText;
+    @FXML
+    public TextField SimStepText;
+    @FXML
+    private TableView<?> PlanetDataTable;
+    @FXML
+    private Canvas SimulationCanvas;
+    @FXML
+    private LineChart<?, ?> EnergyChart;
+    
+    @FXML
+    private Slider SimulationSpeedSlider;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
+        SimulationSpeedSlider.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue arg0, Object arg1, Object arg2){
+                System.out.println( arg0.getValue() );
+            }
         
+        
+        });
     }    
-    
+
     @FXML
-    public void ImportDataFromFile(){
-        System.out.println("mouse entered");
-}
+    private void importDataFromFile(MouseEvent event) {
+        System.out.println("Import data from file");
+    }
+
+    @FXML
+    private void exportDataToFile(MouseEvent event) {
+        System.out.println("Export data to file");
+    }
+
+    @FXML
+    private void simulationStart(MouseEvent event) {
+        System.out.println("Simulation start");
+        System.out.println(SimulationSpeedSlider.valueProperty().doubleValue());
+    }
+    
+
+    @FXML
+    private void simulationStop(MouseEvent event) {
+        System.out.println("Simulation stop");
+    }
+
+    @FXML
+    private void simulationReset(MouseEvent event) {
+        System.out.println("Simulation reset");
+    }
+
+    @FXML
+    private void disableSimulationSpeedActualise(MouseEvent event) {
+            System.out.println("Simulation speed actualisation disable!");
+            simSpeedActualiseEnabled  = false;
+    }
+
+    @FXML
+    private void simulationSpeedActualise(MouseEvent event) {
+        //System.out.println("AAA!");
+        if(simSpeedActualiseEnabled == true)
+            {System.out.println("Simulation speed actualise");
+        }
+
+    }
+
+    @FXML
+    private void enableSimulationSpeedActualise(MouseEvent event) {
+        System.out.println("Simulation speed actualisation enable!");
+        simSpeedActualiseEnabled = true;
+    }
+    
     
     
 }
