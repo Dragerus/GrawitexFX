@@ -19,22 +19,18 @@ public class PlanetTest {
 
     @Test
     public void testApplyForce() {
-        System.out.println("applyForce");
-        Vector force = null;
-        Planet instance = null;
-        instance.applyForce(force);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     @Test
-    public void testUpdateState() {
-        System.out.println("updateState");
-        double dt = 0.0;
-        Planet instance = null;
-        instance.updateState(dt);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void shouldMovePlanetWithConstantVelocity() {
+        Vector position = new Vector(1.0, -3.0, 1.0);
+        double mass = 1000000000.0;
+        Vector velocity = new Vector(1.0, -1.0, 0.1);
+        Planet planet = new Planet(position, mass, velocity);
+        planet.updateState(1.0);
+        Vector expectedPosition = new Vector(2.0, -4.0, 1.1);
+        assertEquals(expectedPosition, planet.getPosition());
     }
     
 }
