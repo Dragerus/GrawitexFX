@@ -5,13 +5,17 @@
  */
 package grawitexfx;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
@@ -20,6 +24,11 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -76,6 +85,21 @@ public class RootController implements Initializable {
     @FXML
     private void importDataFromFile(MouseEvent event) {
         System.out.println("Import data from file");
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Importuj dane z pliku");
+            stage.setScene(new Scene(root1));  
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(stage);
+            System.out.println("Wybrany plik: "+file.getAbsolutePath());
+            
+          }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
