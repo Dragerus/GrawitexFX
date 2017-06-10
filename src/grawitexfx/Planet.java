@@ -20,7 +20,7 @@ public class Planet {
     private Vector acceleration;
     private double mass;
     
-    public Planet(Vector position, double mass, Vector velocity) {
+    public Planet(String name, Vector position, double mass, Vector velocity) {
         this.velocity = velocity;
         this.position = position;
         this.mass = mass;
