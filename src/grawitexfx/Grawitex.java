@@ -25,6 +25,8 @@ public class Grawitex extends Application {
         stage.setTitle("GrawitexFX");
         stage.setScene(scene);
         stage.show();
+
+        
     }
 
     /**
@@ -32,6 +34,8 @@ public class Grawitex extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+
+        
     }
     
 }
