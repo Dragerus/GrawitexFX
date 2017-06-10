@@ -100,8 +100,4 @@ public class RootController implements Initializable {
         System.out.println("Simulation reset");
     }
 
-
-
-    
-    
 }
