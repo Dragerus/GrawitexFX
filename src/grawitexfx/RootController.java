@@ -10,18 +10,15 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -103,27 +100,8 @@ public class RootController implements Initializable {
         System.out.println("Simulation reset");
     }
 
-    @FXML
-    private void disableSimulationSpeedActualise(MouseEvent event) {
-            System.out.println("Simulation speed actualisation disable!");
-            simSpeedActualiseEnabled  = false;
-    }
 
-    @FXML
-    private void simulationSpeedActualise(MouseEvent event) {
-        //System.out.println("AAA!");
-        if(simSpeedActualiseEnabled == true)
-            {System.out.println("Simulation speed actualise");
-        }
 
-    }
-
-    @FXML
-    private void enableSimulationSpeedActualise(MouseEvent event) {
-        System.out.println("Simulation speed actualisation enable!");
-        simSpeedActualiseEnabled = true;
-    }
-    
     
     
 }
