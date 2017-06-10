@@ -123,7 +123,4 @@ public class RootController implements Initializable {
         System.out.println("Simulation speed actualisation enable!");
         simSpeedActualiseEnabled = true;
     }
-    
-    
-    
 }

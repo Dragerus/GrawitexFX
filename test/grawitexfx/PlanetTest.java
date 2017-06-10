@@ -32,5 +32,4 @@ public class PlanetTest {
         Vector expectedPosition = new Vector(2.0, -4.0, 1.1);
         assertEquals(expectedPosition, planet.getPosition());
     }
-    
 }

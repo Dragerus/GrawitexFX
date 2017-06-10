@@ -12,25 +12,29 @@ import java.util.Objects;
  * @author adam
  */
 public class Planet {
-    String name;
+    private static final double gravitationalConstant = 6.6740831e-11;
+    
+    private String name;
     private Vector velocity;
     private Vector position;
-    private Vector force;
+    private Vector acceleration;
     private double mass;
     
     public Planet(Vector position, double mass, Vector velocity) {
         this.velocity = velocity;
         this.position = position;
         this.mass = mass;
-        this.force = new Vector(0.0, 0.0, 0.0);
+        this.acceleration = new Vector(0.0, 0.0, 0.0);
     }
     
-    public void applyForce(Vector force) {
-        this.force.add(force);
+    public void calculateGravity(Planet otherPlanet) {
+        double gravity = otherPlanet.mass * gravitationalConstant;
+        Vector gravityVector = this.position.subtract(otherPlanet.position).scale(gravity);
+        this.acceleration = this.acceleration.add(gravityVector);
     }
     
     public void updateState(double dt) {
-        Vector acceleration = this.force.scale(1.0 / this.mass);
+        Vector acceleration = this.acceleration.scale(1.0 / this.mass);
         this.velocity = this.velocity.add(acceleration.scale(dt));
         this.position = this.position.add(this.velocity.scale(dt).add(acceleration.scale(dt * dt / 2.0)));
     }
