@@ -22,7 +22,7 @@ public class Grawitex extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("Root.fxml"));
         
         Scene scene = new Scene(root);
-        stage.setTitle("GrawitexFX"); 
+        stage.setTitle("GrawitexFX");
         stage.setScene(scene);
         stage.show();
 

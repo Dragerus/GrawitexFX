@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.chart.LineChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -26,6 +27,9 @@ import javafx.scene.input.MouseEvent;
  * @author szymon
  */
 public class RootController implements Initializable {
+
+    @FXML
+    private Button importDataButton;
     
     private boolean simSpeedActualiseEnabled = false;
     
