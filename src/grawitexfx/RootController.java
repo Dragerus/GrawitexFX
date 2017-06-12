@@ -85,7 +85,7 @@ public class RootController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         PlanetDataTable = new TableView<Planet>();
-        NazwaPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("name"));    /* TODO: POMOCY!!! */
+        NazwaPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("name"));    /* TODO: POMOCY */
         MasaPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("mass") );
         xPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("x") );
         yPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("y") );
