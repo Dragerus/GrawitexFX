@@ -15,23 +15,25 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="810.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grawitexfx.RootController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="930.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="grawitexfx.RootController">
   <tabs>
     <Tab text="Dane planet">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="452.0" prefWidth="740.0">
                <children>
-                  <Button layoutX="625.0" layoutY="448.0" mnemonicParsing="false" onMouseClicked="#importDataFromFile" text="Importuj dane układu..." />
-                  <Button layoutX="440.0" layoutY="448.0" mnemonicParsing="false" onMouseClicked="#exportDataToFile" text="Eksportuj dane układu..." />
-                  <TableView fx:id="PlanetDataTable" layoutX="28.0" layoutY="14.0" prefHeight="434.0" prefWidth="738.0">
-                    <columns>
-                      <TableColumn maxWidth="400.0" minWidth="150.0" prefWidth="175.0" text="Nazwa planety" />
-                        <TableColumn prefWidth="101.0" text="Masa" />
-                      <TableColumn maxWidth="50.0" prefWidth="50.0" resizable="false" text="x" />
-                        <TableColumn maxWidth="50.0" prefWidth="50.0" resizable="false" text="y" />
-                        <TableColumn maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" text="z" />
-                    </columns>
-                  </TableView>
+                  <Button layoutX="745.0" layoutY="513.0" mnemonicParsing="false" onMouseClicked="#importDataFromFile" text="Importuj dane układu..." />
+                  <Button layoutX="560.0" layoutY="513.0" mnemonicParsing="false" onMouseClicked="#exportDataToFile" text="Eksportuj dane układu..." />
+                  <TableView fx:id="PlanetDataTable" layoutX="28.0" layoutY="14.0" prefHeight="487.0" prefWidth="826.0">
+                     <columns>
+                        <TableColumn fx:id="NazwaPlanetyColumn" prefWidth="150.0" resizable="false" text="Nazwa planety" />
+                        <TableColumn prefWidth="75.0" text="masa" />
+                        <TableColumn prefWidth="100.0" text="x" />
+                        <TableColumn prefWidth="100.0" text="y" />
+                        <TableColumn prefWidth="100.0" resizable="false" text="z" />
+                        <TableColumn prefWidth="100.0" resizable="false" text="Vx" />
+                        <TableColumn prefWidth="100.0" resizable="false" text="Vy" />
+                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" resizable="false" text="Vz" />
+                     </columns></TableView>
                </children></AnchorPane>
       </content>
     </Tab>

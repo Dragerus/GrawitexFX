@@ -97,4 +97,11 @@ public class Planet {
         return true;
     }
     
+    public String getName(){ return this.name; }
+    public double getX(){ return this.position.x; }
+    public double getY(){ return this.position.y; }
+    public double getZ(){ return this.position.z; }
+    public double getVx(){ return this.velocity.x; }
+    public double getVy(){ return this.velocity.y; }
+    public double getVz(){ return this.velocity.z; }
 }

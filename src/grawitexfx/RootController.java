@@ -7,10 +7,12 @@ package grawitexfx;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,8 +23,10 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -38,9 +42,6 @@ public class RootController implements Initializable {
 
     public Universe universe = new Universe(); /* TODO: potatoes gonna potatoe */
     
-            @FXML
-    private Button importDataButton;
-    
     private boolean simSpeedActualiseEnabled = false;
     
     @FXML
@@ -53,7 +54,7 @@ public class RootController implements Initializable {
     @FXML
     public TextField SimStepText;
     @FXML
-    private TableView<?> PlanetDataTable;
+    private TableView<Planet> PlanetDataTable;
     @FXML
     private Canvas SimulationCanvas;
     @FXML
@@ -61,11 +62,25 @@ public class RootController implements Initializable {
     
     @FXML
     private Slider SimulationSpeedSlider;
+    @FXML
+    private TableColumn<?, ?> NazwaPlanetyColumn;
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        PlanetDataTable = new TableView<Planet>();
+        System.out.println(PlanetDataTable.getColumns().size());
+        System.out.println(PlanetDataTable.getColumns());
+        /*PlanetDataTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
+        PlanetDataTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("mass"));
+        PlanetDataTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("x"));
+        PlanetDataTable.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("y"));
+        PlanetDataTable.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("z"));
+        PlanetDataTable.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("Vx"));
+        PlanetDataTable.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("Vy"));
+        PlanetDataTable.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("Vz")); */
+        
         
         SimTimeChoice.setItems( FXCollections.observableArrayList( "Sekunda", "Dzień", "Rok") );
         SimTimeChoice.getSelectionModel().selectFirst();
@@ -100,10 +115,17 @@ public class RootController implements Initializable {
             PlanetDataReader pdr = new PlanetDataReader();
             universe.setPlanets(pdr.readPlanets( file.getAbsolutePath() ));
             /*System.out.println("Wczytane:");
-            for(Planet x: universe.PlanetsTable){
+            for( Planet x: (ArrayList<Planet>)universe.getPlanets()){
                 System.out.println(x);
             }*/
-          }
+                        
+            ObservableList<Planet> obsList = FXCollections.observableArrayList( (ArrayList<Planet>)universe.getPlanets() );
+            System.out.println(obsList.toString());
+           
+            PlanetDataTable.setEditable(true);
+            PlanetDataTable.setItems(obsList);
+            
+        }
         catch(Exception e){
             e.printStackTrace();
         }
