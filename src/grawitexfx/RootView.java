@@ -45,23 +45,24 @@ import javafx.stage.StageStyle;
 public class RootView implements Initializable {
 
     public Universe universe = new Universe();
-    /* TODO: potatoes gonna potatoe */
+    Grawitex grawitex = new Grawitex();             /* TODO: potatoes gonna potatoe */
     SimulationRunner simRunner = new SimulationRunner(universe);
-
+    
+    
     @FXML
     private Button importDataButton;
 
     private boolean simSpeedActualiseEnabled = false;
 
     @FXML
-    public ChoiceBox<String> SimTimeChoice;
+    public static ChoiceBox<String> SimTimeChoice;
 
     @FXML
-    public ChoiceBox<String> SimStepChoice;
+    public static ChoiceBox<String> SimStepChoice;
     @FXML
-    public TextField SimTimeText;
+    public static TextField SimTimeText;
     @FXML
-    public TextField SimStepText;
+    public static TextField SimStepText;
     @FXML
     private TableView<Planet> PlanetDataTable;
     @FXML
@@ -82,9 +83,9 @@ public class RootView implements Initializable {
     @FXML
     private TableColumn<Planet, Double> VyColumn;
     @FXML
-    private TableColumn<Planet, Double> VzColumn;
+    public TableColumn<Planet, Double> VzColumn;
     @FXML
-    private Slider SimulationSpeedSlider;
+    public static Slider SimulationSpeedSlider;
 
     private static final Map<String, TimeUnit> timeUnitMap;
 
@@ -98,19 +99,21 @@ public class RootView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        SimTimeChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
+        //System.out.println(rb);
+        /*SimTimeChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
         SimTimeChoice.getSelectionModel().selectFirst();
 
         SimStepChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
-        SimStepChoice.getSelectionModel().selectFirst();
+        SimStepChoice.getSelectionModel().selectFirst();*/
 
-        SimulationSpeedSlider.valueProperty().addListener(new ChangeListener() {
+
+        /*SimulationSpeedSlider.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observedValue, Object arg1, Object arg2) {
                 System.out.println(observedValue.getValue());
                 updateConfig(null);
             }
-        });
+        });*/ 
 
         NazwaPlanetyColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         /* TODO: POMOCY!!! */
@@ -128,61 +131,6 @@ public class RootView implements Initializable {
         updateConfig(null);
     }
 
-    @FXML
-    private void importDataFromFile(MouseEvent event) {
-        //System.out.println("Import data from file");
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Importuj dane z pliku");
-            stage.setScene(new Scene(root1));
-            FileChooser fileChooser = new FileChooser();
-            File file = fileChooser.showOpenDialog(stage);
-            /*System.out.println("Wybrany plik: "+file.getAbsolutePath());*/
-
-            PlanetDataReader pdr = new PlanetDataReader();
-            universe.setPlanets(pdr.readPlanets(file.getAbsolutePath()));
-            /*System.out.println("Wczytane:");
-            for( Planet x: (ArrayList<Planet>)universe.getPlanets()){
-                System.out.println(x);
-            }*/
-            System.out.println(universe.getPlanets());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        VzColumn.notifyAll();
-    }
-
-    @FXML
-    private void exportDataToFile(MouseEvent event) {
-        System.out.println("Export data to file");
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Importuj dane z pliku");
-            stage.setScene(new Scene(root1));
-            FileChooser fileChooser = new FileChooser();
-            File file = fileChooser.showSaveDialog(stage);
-            System.out.println("Wybrany plik: " + file.getAbsolutePath());
-            PlanetDataWriter pdw = new PlanetDataWriter();
-            pdw.writePlanetsToFile(file.getAbsolutePath(), universe.getPlanets());
-            /*
-            PlanetDataReader pdr = new PlanetDataReader();
-            universe.setPlanets(pdr.readPlanets( file.getAbsolutePath() ));*/
-            /*System.out.println("Wczytane:");
-            for(Planet x: universe.PlanetsTable){
-                System.out.println(x);
-            }*/
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-    
     private boolean simulationConfigIsValid() {
         return SimulationConfig.getSimulationDuration() <= 0.0
                 || SimulationConfig.getSimulationTimeStep() <= 0.0
@@ -197,54 +145,40 @@ public class RootView implements Initializable {
         simulationConfigErrorAlert.showAndWait();
     }
 
+    
+    @FXML
+    private void importDataFromFile(MouseEvent event) {
+        System.out.println("Import data from file");
+        grawitex.importDataFromFile();
+    }
+
+    @FXML
+    private void exportDataToFile(MouseEvent event) {
+        System.out.println("Export data to file");
+        grawitex.exportDataToFile();
+    }
+    
+
     @FXML
     private void simulationStart(MouseEvent event) {
         System.out.println("Simulation start");
-        System.out.println(SimulationSpeedSlider.valueProperty().doubleValue());
-        System.out.println(SimulationConfig.print());
-
-        if (!simulationConfigIsValid()) {
-            displayError(
-                    "Niepoprawne parametry symulacji",
-                    "Sprawdź poprawność parametrów i spróbuj ponownie"
-            );
-        } else {
-            SimulationConfig.enableSimulation();
-            simRunner.simulate();
-        }
-
+       
     }
 
     @FXML
     private void simulationStop(MouseEvent event) {
         System.out.println("Simulation stop");
-        SimulationConfig.disableSimulation();
+       
     }
 
     @FXML
     private void simulationReset(MouseEvent event) {
         System.out.println("Simulation reset");
-        simRunner.resetTime();
+
     }
 
     @FXML
     private void updateConfig(MouseEvent event) {
-        try {
-            SimulationConfig.setSimulationTimeStep(
-                    Double.parseDouble(SimStepText.getText()),
-                    timeUnitMap.get(SimStepChoice.getSelectionModel().getSelectedItem())
-            );
-        } catch (NumberFormatException e) {
-        }
-        try {
-            SimulationConfig.setSimulationDuration(
-                    Double.parseDouble(SimTimeText.getText()),
-                    timeUnitMap.get(SimTimeChoice.getSelectionModel().getSelectedItem())
-            );
-        } catch (NumberFormatException e) {
-        }
-        SimulationConfig.setSimulationRealSpeedModifier(
-                SimulationSpeedSlider.getValue()
-        );
+        System.out.println("updateConfig");
     }
 }

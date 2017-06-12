@@ -20,7 +20,7 @@ public class Universe extends Observable {
     }
     
     Object getPlanets(){
-        return this.PlanetsTable.clone();
+        return this.PlanetsTable;
     }
     
     void updatePlanets() {
