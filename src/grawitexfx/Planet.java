@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author adam
  */
 public class Planet {
-    public static final double GRAVITATIONAL_CONSTANT = 6.6740831e-11;
+    public static final double GRAVITATIONAL_CONSTANT = 6.67408313131313131313131e-11;
     
     private String name;
     private Vector velocity;

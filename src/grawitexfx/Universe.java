@@ -6,14 +6,14 @@
 package grawitexfx;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  *
  * @author szymon
  */
-public class Universe {
+public class Universe extends Observable {
     private ArrayList<Planet> PlanetsTable = new ArrayList<>();
-    
     
     void setPlanets(ArrayList<Planet> Planets){
         this.PlanetsTable = Planets;
@@ -23,4 +23,15 @@ public class Universe {
         return this.PlanetsTable.clone();
     }
     
+    void updatePlanets() {
+        for(Planet planet : PlanetsTable) {
+            for(Planet otherPlanet : PlanetsTable) {
+                planet.calculateGravity(otherPlanet);
+            }
+        }
+        for(Planet planet : PlanetsTable) {
+            planet.updateState(SimulationConfig.getSimulationTimeStep());
+        }
+        setChanged();
+    }
 }
