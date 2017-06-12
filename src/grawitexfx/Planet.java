@@ -40,18 +40,17 @@ public class Planet {
     }
     
     public void updateState(double dt) {
-        Vector acceleration = this.acceleration.scale(1.0 / this.mass);
-        this.velocity = this.velocity.add(acceleration.scale(dt));
-        this.position = this.position.add(this.velocity.scale(dt).add(acceleration.scale(dt * dt / 2.0)));
+        velocity = velocity.add(acceleration.scale(dt));
+        position = position.add(velocity.scale(dt).add(acceleration.scale(dt * dt / 2.0)));
     }
     
-    public Vector getVelocity() {return this.velocity;}
+    public Vector getVelocity() {return velocity;}
     
-    public Vector getPosition() {return this.position;}
+    public Vector getPosition() {return position;}
     
-    public double getMass() {return this.mass;}
+    public double getMass() {return mass;}
     
-    public Vector getAcceleration() {return this.acceleration;}
+    public Vector getAcceleration() {return acceleration;}
 
     @Override
     public int hashCode() {
@@ -65,10 +64,8 @@ public class Planet {
 
     @Override
     public String toString() {
-        return name + " " + mass + " " + position.x + " " + position.y + " " + position.z + " "  + velocity.x + " " + velocity.y + " " + velocity.z + " " ;
-    }/* TODO zmienić " " na "\n" */
-
-    
+        return name + "\n" + mass + "\n" + position.x + "\n" + position.y + "\n" + position.z + "\n"  + velocity.x + "\n" + velocity.y + "\n" + velocity.z + "\n" ;
+    }
     
     @Override
     public boolean equals(Object obj) {
@@ -86,12 +83,6 @@ public class Planet {
             return false;
         }
         if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.velocity, other.velocity)) {
-            return false;
-        }
-        if (!Objects.equals(this.position, other.position)) {
             return false;
         }
         return true;

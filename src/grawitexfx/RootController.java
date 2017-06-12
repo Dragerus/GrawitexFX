@@ -5,8 +5,12 @@
  */
 package grawitexfx;
 
+import grawitexfx.SimulationConfig.TimeUnit;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.chart.LineChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
@@ -38,12 +43,12 @@ public class RootController implements Initializable {
 
     @FXML
     private Button importDataButton;
-    
+
     private boolean simSpeedActualiseEnabled = false;
-    
+
     @FXML
     public ChoiceBox<String> SimTimeChoice;
-    
+
     @FXML
     public ChoiceBox<String> SimStepChoice;
     @FXML
@@ -56,47 +61,53 @@ public class RootController implements Initializable {
     private Canvas SimulationCanvas;
     @FXML
     private LineChart<?, ?> EnergyChart;
-    
+
     @FXML
     private Slider SimulationSpeedSlider;
-    
-    
+
+    private static final Map<String, TimeUnit> timeUnitMap;
+
+    static {
+        timeUnitMap = new HashMap<>();
+        timeUnitMap.put("sekund", TimeUnit.Seconds);
+        timeUnitMap.put("dni", TimeUnit.Days);
+        timeUnitMap.put("lat", TimeUnit.Years);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        
-        SimTimeChoice.setItems( FXCollections.observableArrayList( "Sekunda", "Dzień", "Rok") );
+
+        SimTimeChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
         SimTimeChoice.getSelectionModel().selectFirst();
 
-        SimStepChoice.setItems( FXCollections.observableArrayList( "Sekunda", "Dzień", "Rok") );
+        SimStepChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
         SimStepChoice.getSelectionModel().selectFirst();
-        
         
         SimulationSpeedSlider.valueProperty().addListener(new ChangeListener() {
             @Override
-            public void changed(ObservableValue arg0, Object arg1, Object arg2){
-                System.out.println( arg0.getValue() );
+            public void changed(ObservableValue observedValue, Object arg1, Object arg2) {
+                System.out.println(observedValue.getValue());
+                updateConfig(null);
             }
-        
-        
         });
-    }    
+        
+        updateConfig(null);
+    }
 
     @FXML
     private void importDataFromFile(MouseEvent event) {
         System.out.println("Import data from file");
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Importuj dane z pliku");
-            stage.setScene(new Scene(root1));  
+            stage.setScene(new Scene(root1));
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(stage);
-            System.out.println("Wybrany plik: "+file.getAbsolutePath());
-            
-          }
-        catch(Exception e){
+            System.out.println("Wybrany plik: " + file.getAbsolutePath());
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -111,8 +122,22 @@ public class RootController implements Initializable {
     private void simulationStart(MouseEvent event) {
         System.out.println("Simulation start");
         System.out.println(SimulationSpeedSlider.valueProperty().doubleValue());
+        System.out.println(SimulationConfig.print());
+        
+        if(SimulationConfig.getSimulationDuration() <= 0.0 ||
+                SimulationConfig.getSimulationTimeStep() <= 0.0 ||
+                SimulationConfig.getSimulationTimeStep() >= SimulationConfig.getSimulationDuration()) {
+            Alert simulationConfigErrorAlert = new Alert(Alert.AlertType.ERROR);
+            simulationConfigErrorAlert.setTitle("Błąd");
+            simulationConfigErrorAlert.setHeaderText(
+                    "Niepoprawne parametry symulacji"
+            );
+            simulationConfigErrorAlert.setContentText(
+                    "Sprawdź poprawność parametrów i spróbuj ponownie"
+            );
+            simulationConfigErrorAlert.showAndWait();
+        }
     }
-    
 
     @FXML
     private void simulationStop(MouseEvent event) {
@@ -123,5 +148,23 @@ public class RootController implements Initializable {
     private void simulationReset(MouseEvent event) {
         System.out.println("Simulation reset");
     }
-
+    
+    @FXML
+    private void updateConfig(MouseEvent event) {
+        try {
+            SimulationConfig.setSimulationTimeStep(
+                    Double.parseDouble(SimStepText.getText()),
+                    timeUnitMap.get(SimStepChoice.getSelectionModel().getSelectedItem())
+            );
+        } catch (NumberFormatException e) {}
+        try {
+            SimulationConfig.setSimulationDuration(
+                    Double.parseDouble(SimTimeText.getText()),
+                    timeUnitMap.get(SimTimeChoice.getSelectionModel().getSelectedItem())
+            );
+        } catch (NumberFormatException e) {}
+        SimulationConfig.setSimulationRealSpeedModifier(
+                    SimulationSpeedSlider.getValue()
+        );
+    }
 }
