@@ -7,6 +7,7 @@ package grawitexfx;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.application.Application;
@@ -54,8 +55,9 @@ public class Grawitex extends Application {
         launch(args);
        
     }
+
     
-    public void importDataFromFile() {
+    public Object importDataFromFile() {
         //System.out.println("Import data from file");
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
@@ -65,16 +67,17 @@ public class Grawitex extends Application {
             stage.setScene(new Scene(root1));
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(stage);
-            if(file == null){return ;}                          /*  "cancel clicked"  */
+            if(file == null){return null;}                          /*  "cancel clicked"  */
             PlanetDataReader pdr = new PlanetDataReader();
             universe.setPlanets(pdr.readPlanets(file.getAbsolutePath()));
 
             System.out.println(universe.getPlanets());
+            
         } catch (IOException e) {
             this.displayError("Błąd podczas importu danych", e.getMessage());
             //e.printStackTrace();
         }
-
+        return universe.getPlanets();
         //VzColumn.notifyAll();
     }
     

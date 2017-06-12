@@ -6,6 +6,10 @@
 package grawitexfx;
 
 import java.util.Objects;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  *
@@ -51,7 +55,7 @@ public class Planet {
     
     public Vector getPosition() {return position;}
     
-    public double getMass() {return mass;}
+    public double getMass_inDouble() {return mass;}
     
     public Vector getAcceleration() {return acceleration;}
 
@@ -92,12 +96,14 @@ public class Planet {
         }
         return true;
     }
+    /* for tableView in fx  */
+    public String getName(){ return new SimpleStringProperty(this.name).getValue(); }
+    public Double getMass(){ return new SimpleDoubleProperty(this.mass).getValue(); }
+    public Double getX(){ return new SimpleDoubleProperty(this.position.x).getValue(); }
+    public Double getY(){ return new SimpleDoubleProperty(this.position.y).getValue(); }
+    public Double getZ(){ return new SimpleDoubleProperty(this.position.z).getValue(); }
+    public Double getVx(){ return new SimpleDoubleProperty(this.velocity.x).getValue(); }
+    public Double getVy(){ return new SimpleDoubleProperty(this.velocity.y).getValue(); }
+    public Double getVz(){ return new SimpleDoubleProperty(this.velocity.z).getValue(); }
     
-    public String getName(){ return this.name; }
-    public double getX(){ return this.position.x; }
-    public double getY(){ return this.position.y; }
-    public double getZ(){ return this.position.z; }
-    public double getVx(){ return this.velocity.x; }
-    public double getVy(){ return this.velocity.y; }
-    public double getVz(){ return this.velocity.z; }
 }

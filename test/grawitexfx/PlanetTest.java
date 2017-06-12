@@ -35,12 +35,12 @@ public class PlanetTest {
                 -2.0/3.0,
                 1.0/3.0,
                 -2.0/3.0
-        ).scale(b.getMass() * Planet.GRAVITATIONAL_CONSTANT / 9.0);
+        ).scale(b.getMass_inDouble() * Planet.GRAVITATIONAL_CONSTANT / 9.0);
         Vector expectedAccelerationB = new Vector(
                 2.0/3.0,
                 -1.0/3.0,
                 2.0/3.0
-        ).scale(a.getMass() * Planet.GRAVITATIONAL_CONSTANT / 9.0);
+        ).scale(a.getMass_inDouble() * Planet.GRAVITATIONAL_CONSTANT / 9.0);
         a.calculateGravity(b);
         b.calculateGravity(a);
         assertEquals(expectedAccelerationA, a.getAcceleration());

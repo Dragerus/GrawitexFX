@@ -7,9 +7,12 @@ package grawitexfx;
 
 import grawitexfx.SimulationConfig.TimeUnit;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -48,11 +51,12 @@ public class RootView implements Initializable {
     public static TextField SimTimeText;
     @FXML
     public static TextField SimStepText;
-    @FXML
-    private TableView<Planet> PlanetDataTable;
+
     @FXML
     private Canvas SimulationCanvas;
 
+    @FXML
+    public TableView<Planet> PlanetDataTable;
     @FXML
     private TableColumn<Planet, String> NazwaPlanetyColumn;
     @FXML
@@ -83,7 +87,8 @@ public class RootView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+        
         //System.out.println(rb);
         /*SimTimeChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
         SimTimeChoice.getSelectionModel().selectFirst();
@@ -100,9 +105,11 @@ public class RootView implements Initializable {
             }
         });*/ 
 
-        NazwaPlanetyColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
         /* TODO: POMOCY!!! */
-        System.out.println(PlanetDataTable.getColumns().size());
+        //System.out.println("Ilosc kolumn w tabeli:"+PlanetDataTable.getColumns().size());
+        //PlanetDataTable.s
+        NazwaPlanetyColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         MasaPlanetyColumn.setCellValueFactory(new PropertyValueFactory<>("mass"));
         xPlanetyColumn.setCellValueFactory(new PropertyValueFactory<>("x"));
         yPlanetyColumn.setCellValueFactory(new PropertyValueFactory<>("y"));
@@ -110,8 +117,8 @@ public class RootView implements Initializable {
         VxColumn.setCellValueFactory(new PropertyValueFactory<>("Vx"));
         VyColumn.setCellValueFactory(new PropertyValueFactory<>("Vy"));
         VzColumn.setCellValueFactory(new PropertyValueFactory<>("Vz"));
-
-        PlanetDataTable.getColumns().addAll(NazwaPlanetyColumn, MasaPlanetyColumn, xPlanetyColumn, yPlanetyColumn, zPlanetyColumn, VxColumn, VyColumn, VzColumn);
+        //System.out.println(PlanetDataTable.getColumns().get(0).getText());
+        //PlanetDataTable.getColumns().addAll(NazwaPlanetyColumn/*, MasaPlanetyColumn, xPlanetyColumn, yPlanetyColumn, zPlanetyColumn, VxColumn, VyColumn, VzColumn*/ );
 
         updateConfig(null);
     }
@@ -134,7 +141,8 @@ public class RootView implements Initializable {
     @FXML
     private void importDataFromFile(MouseEvent event) {
         System.out.println("Import data from file");
-        grawitex.importDataFromFile();
+        ArrayList<Planet> data = (ArrayList<Planet>)grawitex.importDataFromFile();
+        PlanetDataTable.setItems(FXCollections.observableArrayList(data));
     }
 
     @FXML
