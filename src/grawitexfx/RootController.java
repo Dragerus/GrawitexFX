@@ -5,9 +5,12 @@
  */
 package grawitexfx;
 
+import grawitexfx.SimulationConfig.TimeUnit;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,6 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.chart.LineChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
@@ -42,11 +46,15 @@ public class RootController implements Initializable {
 
     public Universe universe = new Universe(); /* TODO: potatoes gonna potatoe */
     
-    private boolean simSpeedActualiseEnabled = false;
     
     @FXML
+    private Button importDataButton;
+
+    private boolean simSpeedActualiseEnabled = false;
+
+    @FXML
     public ChoiceBox<String> SimTimeChoice;
-    
+
     @FXML
     public ChoiceBox<String> SimStepChoice;
     @FXML
@@ -59,68 +67,38 @@ public class RootController implements Initializable {
     private Canvas SimulationCanvas;
     @FXML
     private LineChart<?, ?> EnergyChart;
-    
+
     @FXML
     private Slider SimulationSpeedSlider;
-    
-    @FXML
-    private TableColumn<Planet, String> NazwaPlanetyColumn;
-    @FXML
-    private TableColumn<Planet, Double> MasaPlanetyColumn;
-    @FXML
-    private TableColumn<Planet, Double> xPlanetyColumn;
-    @FXML
-    private TableColumn<Planet, Double> yPlanetyColumn;
-    @FXML
-    private TableColumn<Planet, Double> zPlanetyColumn;
-    @FXML
-    private TableColumn<Planet, Double> VxColumn;
-    @FXML
-    private TableColumn<Planet, Double> VyColumn;
-    @FXML
-    private TableColumn<Planet, Double> VzColumn;
-    
-    
+
+    private static final Map<String, TimeUnit> timeUnitMap;
+
+    static {
+        timeUnitMap = new HashMap<>();
+        timeUnitMap.put("sekund", TimeUnit.Seconds);
+        timeUnitMap.put("dni", TimeUnit.Days);
+        timeUnitMap.put("lat", TimeUnit.Years);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        PlanetDataTable = new TableView<Planet>();
-        NazwaPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("name"));    /* TODO: POMOCY */
-        MasaPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("mass") );
-        xPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("x") );
-        yPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("y") );
-        zPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("z") );
-        VxColumn.setCellValueFactory( new PropertyValueFactory<>("Vx") );
-        VyColumn.setCellValueFactory( new PropertyValueFactory<>("Vy") );
-        VzColumn.setCellValueFactory( new PropertyValueFactory<>("Vz") );
-        
-        PlanetDataTable.getColumns().addAll(NazwaPlanetyColumn, MasaPlanetyColumn, xPlanetyColumn, yPlanetyColumn, zPlanetyColumn, VxColumn, VyColumn, VzColumn);
-        /*PlanetDataTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
-        PlanetDataTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("mass"));
-        PlanetDataTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("x"));
-        PlanetDataTable.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("y"));
-        PlanetDataTable.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("z"));
-        PlanetDataTable.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("Vx"));
-        PlanetDataTable.getColumns().get(6).setCellValueFactory(new PropertyValueFactory<>("Vy"));
-        PlanetDataTable.getColumns().get(7).setCellValueFactory(new PropertyValueFactory<>("Vz")); */
-        
-        
-        SimTimeChoice.setItems( FXCollections.observableArrayList( "Sekunda", "Dzień", "Rok") );
+
+        SimTimeChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
         SimTimeChoice.getSelectionModel().selectFirst();
 
-        SimStepChoice.setItems( FXCollections.observableArrayList( "Sekunda", "Dzień", "Rok") );
+        SimStepChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
         SimStepChoice.getSelectionModel().selectFirst();
-        
         
         SimulationSpeedSlider.valueProperty().addListener(new ChangeListener() {
             @Override
-            public void changed(ObservableValue arg0, Object arg1, Object arg2){
-                System.out.println( arg0.getValue() );
+            public void changed(ObservableValue observedValue, Object arg1, Object arg2) {
+                System.out.println(observedValue.getValue());
+                updateConfig(null);
             }
-        
-        
         });
-    }    
+        
+        updateConfig(null);
+    }
 
     @FXML
     private void importDataFromFile(MouseEvent event) {
@@ -130,7 +108,7 @@ public class RootController implements Initializable {
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle("Importuj dane z pliku");
-            stage.setScene(new Scene(root1));  
+            stage.setScene(new Scene(root1));
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(stage);
             /*System.out.println("Wybrany plik: "+file.getAbsolutePath());*/
@@ -141,15 +119,8 @@ public class RootController implements Initializable {
             for( Planet x: (ArrayList<Planet>)universe.getPlanets()){
                 System.out.println(x);
             }*/
-                        
-            ObservableList<Planet> obsList = FXCollections.observableArrayList( (ArrayList<Planet>)universe.getPlanets() );
-            System.out.println(obsList.toString());
-           
-            PlanetDataTable.setEditable(true);
-            PlanetDataTable.setItems(obsList);
-            
-        }
-        catch(Exception e){
+          }
+        catch(IOException e){
             e.printStackTrace();
         }
 
@@ -178,7 +149,7 @@ public class RootController implements Initializable {
                 System.out.println(x);
             }*/
           }
-        catch(Exception e){
+        catch(IOException e){
             e.printStackTrace();
         }
     
@@ -188,8 +159,26 @@ public class RootController implements Initializable {
     private void simulationStart(MouseEvent event) {
         System.out.println("Simulation start");
         System.out.println(SimulationSpeedSlider.valueProperty().doubleValue());
+        System.out.println(SimulationConfig.print());
+        
+        if(SimulationConfig.getSimulationDuration() <= 0.0 ||
+                SimulationConfig.getSimulationTimeStep() <= 0.0 ||
+                SimulationConfig.getSimulationTimeStep() >= SimulationConfig.getSimulationDuration()) {
+            Alert simulationConfigErrorAlert = new Alert(Alert.AlertType.ERROR);
+            simulationConfigErrorAlert.setTitle("Błąd");
+            simulationConfigErrorAlert.setHeaderText(
+                    "Niepoprawne parametry symulacji"
+            );
+            simulationConfigErrorAlert.setContentText(
+                    "Sprawdź poprawność parametrów i spróbuj ponownie"
+            );
+            simulationConfigErrorAlert.showAndWait();
+        }else{
+            SimulationRunner simRunner = new SimulationRunner(universe);
+            simRunner.simulate();
+        }
+        
     }
-    
 
     @FXML
     private void simulationStop(MouseEvent event) {
@@ -200,5 +189,23 @@ public class RootController implements Initializable {
     private void simulationReset(MouseEvent event) {
         System.out.println("Simulation reset");
     }
-
+    
+    @FXML
+    private void updateConfig(MouseEvent event) {
+        try {
+            SimulationConfig.setSimulationTimeStep(
+                    Double.parseDouble(SimStepText.getText()),
+                    timeUnitMap.get(SimStepChoice.getSelectionModel().getSelectedItem())
+            );
+        } catch (NumberFormatException e) {}
+        try {
+            SimulationConfig.setSimulationDuration(
+                    Double.parseDouble(SimTimeText.getText()),
+                    timeUnitMap.get(SimTimeChoice.getSelectionModel().getSelectedItem())
+            );
+        } catch (NumberFormatException e) {}
+        SimulationConfig.setSimulationRealSpeedModifier(
+                    SimulationSpeedSlider.getValue()
+        );
+    }
 }

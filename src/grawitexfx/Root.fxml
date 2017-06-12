@@ -41,12 +41,12 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ChoiceBox fx:id="SimTimeChoice" layoutX="379.0" layoutY="64.0" prefWidth="150.0" />
-                  <ChoiceBox fx:id="SimStepChoice" layoutX="379.0" layoutY="116.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="SimTimeChoice" layoutX="379.0" layoutY="64.0" onMouseClicked="#updateConfig" prefWidth="150.0" />
+                  <ChoiceBox fx:id="SimStepChoice" layoutX="379.0" layoutY="116.0" onMouseClicked="#updateConfig" prefWidth="150.0" />
                   <Label layoutX="3.0" layoutY="121.0" text="Krok czasowy symulacji:" />
                   <Label layoutX="57.0" layoutY="69.0" text="Czas symulacji: " />
-                  <TextField fx:id="SimStepText" layoutX="187.0" layoutY="116.0" />
-                  <TextField fx:id="SimTimeText" layoutX="187.0" layoutY="64.0" />
+                  <TextField fx:id="SimStepText" layoutX="187.0" layoutY="116.0" onInputMethodTextChanged="#updateConfig" text="0.25" />
+                  <TextField fx:id="SimTimeText" layoutX="187.0" layoutY="64.0" onInputMethodTextChanged="#updateConfig" text="100" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -58,7 +58,7 @@
                   <Button layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#simulationStart" prefHeight="30.0" prefWidth="55.0" text="Start" />
                   <Button layoutX="86.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#simulationStop" prefHeight="30.0" prefWidth="55.0" text="Stop" />
                   <Button layoutX="159.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#simulationReset" prefHeight="30.0" prefWidth="55.0" text="Reset" />
-                  <Slider fx:id="SimulationSpeedSlider" layoutX="365.0" layoutY="21.0" prefHeight="16.0" prefWidth="385.0" />
+                  <Slider fx:id="SimulationSpeedSlider" layoutX="365.0" layoutY="21.0" prefHeight="16.0" prefWidth="385.0" value="50.0" />
                   <Label layoutX="230.0" layoutY="21.0" text="Szybkość symulacji" />
                </children></AnchorPane>
          </content>
