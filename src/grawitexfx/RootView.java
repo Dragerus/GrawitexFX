@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -97,13 +99,14 @@ public class RootView implements Initializable {
         SimStepChoice.getSelectionModel().selectFirst();*/
 
 
+        //System.out.println(SimulationSpeedSlider.getValue());
         /*SimulationSpeedSlider.valueProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observedValue, Object arg1, Object arg2) {
                 System.out.println(observedValue.getValue());
-                updateConfig(null);
+                //updateConfig(null);
             }
-        });*/ 
+        }); */
 
 
         /* TODO: POMOCY!!! */
