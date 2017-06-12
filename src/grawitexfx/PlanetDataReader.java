@@ -7,6 +7,7 @@ package grawitexfx;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -68,7 +69,7 @@ public class PlanetDataReader {
             this.Planets.add( new Planet(name, mass, new Vector(x,y,z), new Vector(vx,vy,vz))); /* the last one */
             
         }
-        catch(Exception e){
+        catch(IOException e){
             e.printStackTrace();
         }
 

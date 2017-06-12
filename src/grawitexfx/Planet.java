@@ -29,6 +29,9 @@ public class Planet {
     }
     
     public void calculateGravity(Planet otherPlanet) {
+        if(otherPlanet == this)
+            return;
+        
         Vector direction = otherPlanet.position.subtract(this.position);
         Vector directionNormalized = direction.normalize();
         double distance = direction.length();
@@ -64,7 +67,9 @@ public class Planet {
 
     @Override
     public String toString() {
-        return name + "\n" + mass + "\n" + position.x + "\n" + position.y + "\n" + position.z + "\n"  + velocity.x + "\n" + velocity.y + "\n" + velocity.z + "\n" ;
+        return name + "\n" + mass + "\n" + position.x + "\n" + position.y +
+                "\n" + position.z + "\n"  + velocity.x + "\n" + velocity.y +
+                "\n" + velocity.z + "\n" ;
     }
     
     @Override
