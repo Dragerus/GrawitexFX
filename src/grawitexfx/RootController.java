@@ -119,6 +119,7 @@ public class RootController implements Initializable {
             for( Planet x: (ArrayList<Planet>)universe.getPlanets()){
                 System.out.println(x);
             }*/
+            System.out.println(universe.getPlanets());
           }
         catch(IOException e){
             e.printStackTrace();
