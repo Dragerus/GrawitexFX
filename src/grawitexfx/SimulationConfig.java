@@ -11,6 +11,7 @@ package grawitexfx;
  */
 public final class SimulationConfig {
 
+    private static boolean canRun = false;
     private static double simulationDuration;
     private static double simulationTimeStep;
     private static double simulationRealSpeedModifier;
@@ -24,6 +25,19 @@ public final class SimulationConfig {
         Years
     }
 
+    public static boolean canRun(){
+        return canRun;
+    }
+    
+    public static void disableSimulation(){
+        canRun = false;
+    }
+    
+    public static void enableSimulation(){
+        canRun = true;
+    }
+        
+    
     public static double getSimulationDuration() {
         return simulationDuration;
     }

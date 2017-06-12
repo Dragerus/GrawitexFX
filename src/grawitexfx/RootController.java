@@ -45,7 +45,7 @@ import javafx.stage.StageStyle;
 public class RootController implements Initializable {
 
     public Universe universe = new Universe(); /* TODO: potatoes gonna potatoe */
-    
+    SimulationRunner simRunner = new SimulationRunner(universe);
     
     @FXML
     private Button importDataButton;
@@ -175,7 +175,7 @@ public class RootController implements Initializable {
             );
             simulationConfigErrorAlert.showAndWait();
         }else{
-            SimulationRunner simRunner = new SimulationRunner(universe);
+            SimulationConfig.enableSimulation();
             simRunner.simulate();
         }
         
@@ -184,11 +184,13 @@ public class RootController implements Initializable {
     @FXML
     private void simulationStop(MouseEvent event) {
         System.out.println("Simulation stop");
+        SimulationConfig.disableSimulation();
     }
 
     @FXML
     private void simulationReset(MouseEvent event) {
         System.out.println("Simulation reset");
+        simRunner.resetTime();
     }
     
     @FXML
