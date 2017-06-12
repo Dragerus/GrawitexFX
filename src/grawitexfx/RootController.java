@@ -41,7 +41,9 @@ import javafx.stage.StageStyle;
  */
 public class RootController implements Initializable {
 
-    @FXML
+    public Universe universe = new Universe(); /* TODO: potatoes gonna potatoe */
+    
+            @FXML
     private Button importDataButton;
 
     private boolean simSpeedActualiseEnabled = false;
@@ -96,8 +98,8 @@ public class RootController implements Initializable {
 
     @FXML
     private void importDataFromFile(MouseEvent event) {
-        System.out.println("Import data from file");
-        try {
+        //System.out.println("Import data from file");
+        try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
@@ -105,9 +107,16 @@ public class RootController implements Initializable {
             stage.setScene(new Scene(root1));
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(stage);
-            System.out.println("Wybrany plik: " + file.getAbsolutePath());
-
-        } catch (IOException e) {
+            /*System.out.println("Wybrany plik: "+file.getAbsolutePath());*/
+            
+            PlanetDataReader pdr = new PlanetDataReader();
+            universe.setPlanets(pdr.readPlanets( file.getAbsolutePath() ));
+            /*System.out.println("Wczytane:");
+            for(Planet x: universe.PlanetsTable){
+                System.out.println(x);
+            }*/
+          }
+        catch(IOException e){
             e.printStackTrace();
         }
 
@@ -116,6 +125,30 @@ public class RootController implements Initializable {
     @FXML
     private void exportDataToFile(MouseEvent event) {
         System.out.println("Export data to file");
+        
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Importuj dane z pliku");
+            stage.setScene(new Scene(root1));  
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showSaveDialog(stage);
+            System.out.println("Wybrany plik: "+file.getAbsolutePath());
+            PlanetDataWriter pdw = new PlanetDataWriter();
+            pdw.writePlanetsToFile(file.getAbsolutePath() , universe.getPlanets() );
+            /*
+            PlanetDataReader pdr = new PlanetDataReader();
+            universe.setPlanets(pdr.readPlanets( file.getAbsolutePath() ));*/
+            /*System.out.println("Wczytane:");
+            for(Planet x: universe.PlanetsTable){
+                System.out.println(x);
+            }*/
+          }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    
     }
 
     @FXML
