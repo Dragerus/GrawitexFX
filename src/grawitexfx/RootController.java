@@ -62,16 +62,39 @@ public class RootController implements Initializable {
     
     @FXML
     private Slider SimulationSpeedSlider;
+    
     @FXML
-    private TableColumn<?, ?> NazwaPlanetyColumn;
+    private TableColumn<Planet, String> NazwaPlanetyColumn;
+    @FXML
+    private TableColumn<Planet, Double> MasaPlanetyColumn;
+    @FXML
+    private TableColumn<Planet, Double> xPlanetyColumn;
+    @FXML
+    private TableColumn<Planet, Double> yPlanetyColumn;
+    @FXML
+    private TableColumn<Planet, Double> zPlanetyColumn;
+    @FXML
+    private TableColumn<Planet, Double> VxColumn;
+    @FXML
+    private TableColumn<Planet, Double> VyColumn;
+    @FXML
+    private TableColumn<Planet, Double> VzColumn;
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         PlanetDataTable = new TableView<Planet>();
-        System.out.println(PlanetDataTable.getColumns().size());
-        System.out.println(PlanetDataTable.getColumns());
+        NazwaPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("name"));    /* TODO: POMOCY!!! */
+        MasaPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("mass") );
+        xPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("x") );
+        yPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("y") );
+        zPlanetyColumn.setCellValueFactory( new PropertyValueFactory<>("z") );
+        VxColumn.setCellValueFactory( new PropertyValueFactory<>("Vx") );
+        VyColumn.setCellValueFactory( new PropertyValueFactory<>("Vy") );
+        VzColumn.setCellValueFactory( new PropertyValueFactory<>("Vz") );
+        
+        PlanetDataTable.getColumns().addAll(NazwaPlanetyColumn, MasaPlanetyColumn, xPlanetyColumn, yPlanetyColumn, zPlanetyColumn, VxColumn, VyColumn, VzColumn);
         /*PlanetDataTable.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("name"));
         PlanetDataTable.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("mass"));
         PlanetDataTable.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("x"));

@@ -26,13 +26,13 @@
                   <TableView fx:id="PlanetDataTable" layoutX="28.0" layoutY="14.0" prefHeight="487.0" prefWidth="826.0">
                      <columns>
                         <TableColumn fx:id="NazwaPlanetyColumn" prefWidth="150.0" resizable="false" text="Nazwa planety" />
-                        <TableColumn prefWidth="75.0" text="masa" />
-                        <TableColumn prefWidth="100.0" text="x" />
-                        <TableColumn prefWidth="100.0" text="y" />
-                        <TableColumn prefWidth="100.0" resizable="false" text="z" />
-                        <TableColumn prefWidth="100.0" resizable="false" text="Vx" />
-                        <TableColumn prefWidth="100.0" resizable="false" text="Vy" />
-                        <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" resizable="false" text="Vz" />
+                        <TableColumn fx:id="MasaPlanetyColumn" prefWidth="75.0" text="masa" />
+                        <TableColumn prefWidth="100.0" text="x" fx:id="xPlanetyColumn" />
+                        <TableColumn fx:id="yPlanetyColumn" prefWidth="100.0" text="y" />
+                        <TableColumn fx:id="zPlanetyColumn" prefWidth="100.0" resizable="false" text="z" />
+                        <TableColumn fx:id="VxColumn" prefWidth="100.0" resizable="false" text="Vx" />
+                        <TableColumn fx:id="VyColumn" prefWidth="100.0" resizable="false" text="Vy" />
+                        <TableColumn fx:id="VzColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" resizable="false" text="Vz" />
                      </columns></TableView>
                </children></AnchorPane>
       </content>
