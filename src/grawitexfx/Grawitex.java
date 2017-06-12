@@ -7,16 +7,13 @@ package grawitexfx;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -105,7 +102,7 @@ public class Grawitex extends Application {
 
     }
     
-    private boolean simulationConfigIsValid() {
+    public boolean simulationConfigIsValid() {
         return SimulationConfig.getSimulationDuration() <= 0.0
                 || SimulationConfig.getSimulationTimeStep() <= 0.0
                 || SimulationConfig.getSimulationTimeStep() >= SimulationConfig.getSimulationDuration();
@@ -113,13 +110,13 @@ public class Grawitex extends Application {
     
     private void displayError(String header, String content) {
         Alert simulationConfigErrorAlert = new Alert(Alert.AlertType.ERROR);
-        simulationConfigErrorAlert.setTitle("Błąd");
+        simulationConfigErrorAlert.setTitle("Uwaga!");
         simulationConfigErrorAlert.setHeaderText(header);
         simulationConfigErrorAlert.setContentText(content);
         simulationConfigErrorAlert.showAndWait();
     }
     
-    private void simulationStart() {
+    public void simulationStart() {
         System.out.println("Simulation start");
         //System.out.println(SimulationSpeedSlider.valueProperty().doubleValue());
         System.out.println(SimulationConfig.print());
@@ -136,12 +133,12 @@ public class Grawitex extends Application {
 
     }
 
-    private void simulationStop() {
+    public void simulationStop() {
         System.out.println("Simulation stop");
         SimulationConfig.disableSimulation();
     }
 
-    private void simulationReset() {
+    public void simulationReset() {
         System.out.println("Simulation reset");
         simRunner.resetTime();
     }

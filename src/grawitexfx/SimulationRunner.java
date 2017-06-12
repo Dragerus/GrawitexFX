@@ -5,11 +5,6 @@
  */
 package grawitexfx;
 
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author szymon
