@@ -250,7 +250,6 @@ public class RootView implements Initializable {
             SimulationConfig.enableSimulation();
             simRunner.simulate();
         }
-
     }
 
     @FXML
