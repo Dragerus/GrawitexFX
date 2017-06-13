@@ -30,6 +30,7 @@ public class SimulationRunner {
             universe.updatePlanets();
             universe.packEnergyData();
             iteration += 1;
+            System.out.println("Kolejna iteracja"+ iteration);
             /*   
             try {
                 TimeUnit.SECONDS.sleep(3);
@@ -38,7 +39,7 @@ public class SimulationRunner {
             }
              */
         }
-
+        System.out.println(universe.getEnergyData());
     }
 
 }

@@ -36,12 +36,14 @@ public class Universe extends Observable {
         for(Planet planet: planetsTable){
             potential += planet.getPotentialEnergy();
             kinetic += planet.getKineticEnergy(); /* just in case we would need it later */
-            PlanetsEnergyData.add(potential + kinetic);
+            
             //System.out.println("Energia: "+ (potential+kinetic));
         }
-        
+        PlanetsEnergyData.add(potential + kinetic);
     }
     
+    public ArrayList<Double> getEnergyData(){ return this.PlanetsEnergyData; }
+   
     void updatePlanets() {
         for(Planet planet : planetsTable) {
             for(Planet otherPlanet : planetsTable) {

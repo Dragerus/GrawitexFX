@@ -26,9 +26,9 @@ public class Vector {
     }
     public Vector getSquare(){
         return new Vector(
-        this.x *= this.x,
-        this.y *= this.y,
-        this.z *= this.z
+        this.x * this.x,
+        this.y * this.y,
+        this.z * this.z
         );
     }
     

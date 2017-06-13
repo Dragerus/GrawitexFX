@@ -25,6 +25,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SubScene;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
@@ -94,18 +96,27 @@ public class RootView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         /*
-    final NumberAxis xAxis = new NumberAxis();
-    final NumberAxis yAxis = new NumberAxis();
-    xAxis.setLabel("Iteracja");
-    this.EnergyChart = new LineChart<>(xAxis, yAxis);
-
+        final NumberAxis xAxis = new NumberAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        EnergyChart = new LineChart<>(xAxis, yAxis);
+        EnergyChart.setTitle("Energia układu planet");
+    
     XYChart.Series<Number, Number> series = new XYChart.Series<>();
+    series.getData().add(new XYChart.Data<>( (Number)1, (Number)23));
+    series.getData().add(new XYChart.Data<>( (Number)2, (Number)114));
+    *///System.out.println(EnergyChart.getXAxis());
+    //EnergyChart.getData().add(series);
+    /*
+
+    xAxis.setLabel("Iteracja");
+    this.EnergyChart 
+
+    
     series.setName("Energia planet");
     // populating the series with data
     this.EnergyChart.setTitle("Energia Planet");
     
-    series.getData().add(new XYChart.Data<>(1, 23));
-    series.getData().add(new XYChart.Data<>(2, 114));
+
     series.getData().add(new XYChart.Data<>(3, 15));
     series.getData().add(new XYChart.Data<>(4, 124));
     

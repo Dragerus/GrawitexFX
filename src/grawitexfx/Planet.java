@@ -36,7 +36,7 @@ public class Planet {
         
     }
     public void calculateKineticEnergy(){
-        this.kinetic_energy = this.velocity.getSquare().scale(this.mass).scale(0.5); /* chain chain chain */        
+        this.kinetic_energy = this.velocity.getSquare().scale(this.mass).scale(0.5).scale(1e-60); /* chain chain chain */        
     }
     public Double getKineticEnergy(){
         return this.kinetic_energy.length();
