@@ -42,6 +42,7 @@ public class SimulationRunner {
                 x.updateState(SimulationConfig.getSimulationTimeStep());
             }*/
             universe.updatePlanets();
+            universe.packEnergyData();
             iteration += 1;
             /*   
             try {
