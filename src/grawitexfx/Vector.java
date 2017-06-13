@@ -24,6 +24,13 @@ public class Vector {
         this.y = y;
         this.z = z;
     }
+    public Vector getSquare(){
+        return new Vector(
+        this.x *= this.x,
+        this.y *= this.y,
+        this.z *= this.z
+        );
+    }
     
     public Vector add(Vector other) {
         return new Vector(

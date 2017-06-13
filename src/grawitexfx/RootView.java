@@ -18,6 +18,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -26,6 +29,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -39,8 +43,6 @@ public class RootView implements Initializable {
     SimulationRunner simRunner = new SimulationRunner(universe);
     
     
-    @FXML
-    private Button importDataButton;
 
     private boolean simSpeedActualiseEnabled = false;
 
@@ -86,12 +88,31 @@ public class RootView implements Initializable {
         timeUnitMap.put("dni", TimeUnit.Days);
         timeUnitMap.put("lat", TimeUnit.Years);
     }
+    @FXML
+    private LineChart<Number, Number> EnergyChart;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        
-        //System.out.println(rb);
+    /*    
+    final NumberAxis xAxis = new NumberAxis();
+    final NumberAxis yAxis = new NumberAxis();
+    xAxis.setLabel("Iteracja");
+    this.EnergyChart = new LineChart<>(xAxis, yAxis);
+
+    XYChart.Series<Number, Number> series = new XYChart.Series<>();
+    series.setName("Energia planet");
+    // populating the series with data
+    this.EnergyChart.setTitle("Energia Planet");
+    
+    series.getData().add(new XYChart.Data<>(1, 23));
+    series.getData().add(new XYChart.Data<>(2, 114));
+    series.getData().add(new XYChart.Data<>(3, 15));
+    series.getData().add(new XYChart.Data<>(4, 124));
+    
+    System.out.println(series);
+    this.EnergyChart.getData().add(series);
+    System.out.println(this.EnergyChart.getData().toArray().length);
+        */
         /*SimTimeChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
         SimTimeChoice.getSelectionModel().selectFirst();
 
@@ -123,7 +144,7 @@ public class RootView implements Initializable {
         //System.out.println(PlanetDataTable.getColumns().get(0).getText());
         //PlanetDataTable.getColumns().addAll(NazwaPlanetyColumn/*, MasaPlanetyColumn, xPlanetyColumn, yPlanetyColumn, zPlanetyColumn, VxColumn, VyColumn, VzColumn*/ );
 
-        updateConfig(null);
+        //updateConfig(null);
     }
 
     private boolean simulationConfigIsValid() {
@@ -139,8 +160,7 @@ public class RootView implements Initializable {
         simulationConfigErrorAlert.setContentText(content);
         simulationConfigErrorAlert.showAndWait();
     }
-
-    
+   
     @FXML
     private void importDataFromFile(MouseEvent event) {
         System.out.println("Import data from file");
@@ -153,8 +173,7 @@ public class RootView implements Initializable {
         System.out.println("Export data to file");
         grawitex.exportDataToFile();
     }
-    
-
+   
     @FXML
     private void simulationStart(MouseEvent event) {
         System.out.println("Simulation start");
@@ -178,5 +197,9 @@ public class RootView implements Initializable {
     private void updateConfig(MouseEvent event) {
         System.out.println("updateConfig");
         //grawitex.updateConfig();
+    }
+
+    @FXML
+    private void updateConfig(InputMethodEvent event) {
     }
 }

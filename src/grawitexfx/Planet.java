@@ -23,6 +23,8 @@ public class Planet {
     private Vector position;
     private Vector acceleration;
     private double mass;
+    private double potential_energy;
+    private Vector kinetic_energy; 
     
     public Planet(String name, double mass, Vector position,  Vector velocity) {
         this.name = new String(name);
@@ -30,6 +32,26 @@ public class Planet {
         this.position = position;
         this.mass = mass;
         this.acceleration = new Vector();
+        this.kinetic_energy = new Vector();
+        
+    }
+    public void calculateKineticEnergy(){
+        this.kinetic_energy = this.velocity.getSquare().scale(this.mass).scale(0.5); /* chain chain chain */        
+    }
+    public Double getKineticEnergy(){
+        return this.kinetic_energy.length();
+    }
+    
+    public void calculatePotentialEnergy(Planet otherPlanet){
+        if(otherPlanet == this)             /* nothing happens nonetheless  */
+                             return; 
+        Vector direction = otherPlanet.position.subtract(this.position);
+        double distance = direction.length();
+        this.potential_energy -= (GRAVITATIONAL_CONSTANT * this.mass * otherPlanet.mass) / distance;
+        
+    }
+    public double getPotentialEnergy(){
+        return this.potential_energy;
     }
     
     public void calculateGravity(Planet otherPlanet) {

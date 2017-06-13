@@ -27,6 +27,8 @@ public class Universe extends Observable {
         for(Planet planet : PlanetsTable) {
             for(Planet otherPlanet : PlanetsTable) {
                 planet.calculateGravity(otherPlanet);
+                planet.calculatePotentialEnergy(otherPlanet);
+                planet.calculateKineticEnergy();
             }
         }
         for(Planet planet : PlanetsTable) {
