@@ -31,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -81,18 +82,40 @@ public class RootView implements Initializable {
     private TableColumn<Planet, Double> VzColumn;
     @FXML
     private Slider SimulationSpeedSlider;
-    @FXML
-    private LineChart<Number, Number> EnergyChart;
+    //@FXML
+    //private LineChart<Number, Number> EnergyChart;
     @FXML
     private SubScene visualizationScene;
     @FXML
+    private AnchorPane panelProba;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        /* EnergyChart */
-        EnergyChart.setTitle("Energia układu planet");
+        /* EnergyChart v  */
+       // EnergyChart.setTitle("Energia układu planet");
+
+        //defining the axes
+        final NumberAxis xAxis = new NumberAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Iteracja");
+        //creating the chart
+        final LineChart<Number,Number> lineChart = 
+                new LineChart<Number,Number>(xAxis,yAxis);
+                
+        lineChart.setTitle("Energia układu planet");
+        //defining a series
+        XYChart.Series series = new XYChart.Series();
+        series.setName("Pomiar energii");
+        //populating the series with data
+       /* ;*/
         
+        panelProba.getChildren().add(lineChart);
+        //Scene scene  = new Scene(lineChart,800,600);
+        lineChart.getData().add(series);
+        
+        
+        /* EnergyChart ^ */
         SimTimeChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
         SimTimeChoice.getSelectionModel().selectFirst();
 
@@ -195,6 +218,9 @@ public class RootView implements Initializable {
         } else {
             SimulationConfig.enableSimulation();
             simRunner.simulate();
+            EnergyAnalyzer EnergyAnalyzer = new EnergyAnalyzer();
+            XYChart.Series<Integer, Double> EnergyData = new XYChart.Series<>();
+            EnergyData = EnergyAnalyzer.getDataSeries( universe.getEnergyData() );
         }
     }
 
@@ -219,6 +245,8 @@ public class RootView implements Initializable {
             );
         } catch (NumberFormatException e) {
         }
+        catch(Exception e){
+        }
     }
     
     @FXML
@@ -241,6 +269,8 @@ public class RootView implements Initializable {
             );
         } catch (NumberFormatException e) {
         }
+        catch(Exception e){
+        }
     }
 
     @FXML
@@ -254,11 +284,4 @@ public class RootView implements Initializable {
         }
     }
 
-    @FXML
-    private void updateConfig(MouseEvent event) {
-    }
-
-    @FXML
-    private void updateConfig(InputMethodEvent event) {
-    }
 }
