@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package grawitexfx;
 
 import grawitexfx.SimulationConfig.TimeUnit;
@@ -94,39 +89,10 @@ public class RootView implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        EnergyChart = new LineChart<>(xAxis, yAxis);
+
+        /* EnergyChart */
         EnergyChart.setTitle("Energia układu planet");
-    
-    XYChart.Series<Number, Number> series = new XYChart.Series<>();
-    series.getData().add(new XYChart.Data<>( (Number)1, (Number)23));
-    series.getData().add(new XYChart.Data<>( (Number)2, (Number)114));
-    *///System.out.println(EnergyChart.getXAxis());
-    //EnergyChart.getData().add(series);
-    /*
-
-    xAxis.setLabel("Iteracja");
-    this.EnergyChart 
-
-    
-    series.setName("Energia planet");
-    // populating the series with data
-    this.EnergyChart.setTitle("Energia Planet");
-    
-
-    series.getData().add(new XYChart.Data<>(3, 15));
-    series.getData().add(new XYChart.Data<>(4, 124));
-    
-    System.out.println(series);
-    this.EnergyChart.getData().add(series);
-    System.out.println(this.EnergyChart.getData().toArray().length);
-        */
-
         
-        
-        //System.out.println(rb);
         SimTimeChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
         SimTimeChoice.getSelectionModel().selectFirst();
 
@@ -145,9 +111,7 @@ public class RootView implements Initializable {
         SimulationConfig.setSimulationRealSpeedModifier(50.0);
 
 
-        /* TODO: POMOCY!!! */
-        //System.out.println("Ilosc kolumn w tabeli:"+PlanetDataTable.getColumns().size());
-        //PlanetDataTable.s
+
         NazwaPlanetyColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         MasaPlanetyColumn.setCellValueFactory(new PropertyValueFactory<>("mass"));
         xPlanetyColumn.setCellValueFactory(new PropertyValueFactory<>("x"));
@@ -156,8 +120,6 @@ public class RootView implements Initializable {
         VxColumn.setCellValueFactory(new PropertyValueFactory<>("Vx"));
         VyColumn.setCellValueFactory(new PropertyValueFactory<>("Vy"));
         VzColumn.setCellValueFactory(new PropertyValueFactory<>("Vz"));
-        //System.out.println(PlanetDataTable.getColumns().get(0).getText());
-        //PlanetDataTable.getColumns().addAll(NazwaPlanetyColumn/*, MasaPlanetyColumn, xPlanetyColumn, yPlanetyColumn, zPlanetyColumn, VxColumn, VyColumn, VzColumn*/ );
 
         this.renderer = new VisualisationRenderer(visualizationScene, universe);
         universe.addObserver(renderer);
@@ -169,21 +131,6 @@ public class RootView implements Initializable {
         simulationConfigErrorAlert.setHeaderText(header);
         simulationConfigErrorAlert.setContentText(content);
         simulationConfigErrorAlert.showAndWait();
-    }
-    
-    private void displayFileChooser() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Importuj dane z pliku");
-            stage.setScene(new Scene(root1));
-            FileChooser fileChooser = new FileChooser();
-            File file = fileChooser.showOpenDialog(stage);
-            if(file == null){return;}                          /*  "cancel clicked"  */
-        } catch (IOException ex) {
-            Logger.getLogger(RootView.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     @FXML
@@ -205,9 +152,8 @@ public class RootView implements Initializable {
             
         } catch (IOException e) {
             this.displayError("Błąd podczas importu danych", e.getMessage());
-            //e.printStackTrace();
+
         }
-        //VzColumn.notifyAll();
     }
     
     @FXML
