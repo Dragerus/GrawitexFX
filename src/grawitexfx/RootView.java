@@ -46,7 +46,6 @@ import javafx.stage.Stage;
 public class RootView implements Initializable {
 
     public Universe universe = new Universe();
-    Grawitex grawitex = new Grawitex();             /* TODO: potatoes gonna potatoe */
     private SimulationRunner simRunner = new SimulationRunner(universe);
     private VisualisationRenderer renderer;
     private boolean simSpeedActualiseEnabled = false;
@@ -60,15 +59,15 @@ public class RootView implements Initializable {
     }
     
     @FXML
-    public ChoiceBox<String> SimTimeChoice;
+    private ChoiceBox<String> SimTimeChoice;
     @FXML
-    public ChoiceBox<String> SimStepChoice;
+    private ChoiceBox<String> SimStepChoice;
     @FXML
-    public TextField SimTimeText;
+    private TextField SimTimeText;
     @FXML
-    public TextField SimStepText;
+    private TextField SimStepText;
     @FXML
-    public TableView<Planet> PlanetDataTable;
+    private TableView<Planet> PlanetDataTable;
     @FXML
     private TableColumn<Planet, String> NazwaPlanetyColumn;
     @FXML
@@ -84,9 +83,9 @@ public class RootView implements Initializable {
     @FXML
     private TableColumn<Planet, Double> VyColumn;
     @FXML
-    public TableColumn<Planet, Double> VzColumn;
+    private TableColumn<Planet, Double> VzColumn;
     @FXML
-    public Slider SimulationSpeedSlider;
+    private Slider SimulationSpeedSlider;
     @FXML
     private LineChart<Number, Number> EnergyChart;
     @FXML
@@ -140,6 +139,10 @@ public class RootView implements Initializable {
                 SimulationConfig.setSimulationRealSpeedModifier((double)observable.getValue());
             }
         });
+        
+        setSimulationDuration((MouseEvent)null);
+        setSimulationTimeStep((MouseEvent)null);
+        SimulationConfig.setSimulationRealSpeedModifier(50.0);
 
 
         /* TODO: POMOCY!!! */
@@ -184,35 +187,82 @@ public class RootView implements Initializable {
     }
 
     @FXML
-    private void importDataFromFile(MouseEvent event) {
-        System.out.println("Import data from file");
-        ArrayList<Planet> data = (ArrayList<Planet>)grawitex.importDataFromFile();
-        PlanetDataTable.setItems(FXCollections.observableArrayList(data));
+    private void importDataFromFile() {
+        //System.out.println("Import data from file");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Importuj dane z pliku");
+            stage.setScene(new Scene(root1));
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(stage);
+            if(file == null){return;}                          /*  "cancel clicked"  */
+            PlanetDataReader pdr = new PlanetDataReader();
+            ArrayList<Planet> data = pdr.readPlanets(file.getAbsolutePath());
+            universe.setPlanets(data);
+            PlanetDataTable.setItems(FXCollections.observableArrayList(data));
+            
+        } catch (IOException e) {
+            this.displayError("Błąd podczas importu danych", e.getMessage());
+            //e.printStackTrace();
+        }
+        //VzColumn.notifyAll();
     }
-
+    
     @FXML
-    private void exportDataToFile(MouseEvent event) {
+    private void exportDataToFile() {
         System.out.println("Export data to file");
-        grawitex.exportDataToFile();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Importuj dane z pliku");
+            stage.setScene(new Scene(root1));
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showSaveDialog(stage);
+            if(file == null){return ;}                          /*  "cancel clicked"  */
+            System.out.println("Wybrany plik: " + file.getAbsolutePath());
+     
+            PlanetDataWriter pdw = new PlanetDataWriter();
+            pdw.writePlanetsToFile(file.getAbsolutePath(), universe.getPlanets());
+
+            this.displayError("Eksport danych do pliku", "Pomyślnie wyeksportowano dane do pliku o nazwie: "+file.getName());
+        } catch (IOException e) {
+            this.displayError("Błąd podczas eksportu danych", e.getMessage());
+            //e.printStackTrace();
+        }
+
     }
    
     @FXML
-    private void simulationStart(MouseEvent event) {
+    public void simulationStart() {
         System.out.println("Simulation start");
-        grawitex.simulationStart();
-       
+        //System.out.println(SimulationSpeedSlider.valueProperty().doubleValue());
+        System.out.println(SimulationConfig.print());
+
+        if (!SimulationConfig.isValid()) {
+            displayError(
+                    "Niepoprawne parametry symulacji",
+                    "Sprawdź poprawność parametrów i spróbuj ponownie"
+            );
+        } else {
+            SimulationConfig.enableSimulation();
+            simRunner.simulate();
+        }
+
     }
 
     @FXML
-    private void simulationStop(MouseEvent event) {
+    private void simulationStop() {
         System.out.println("Simulation stop");
-        grawitex.simulationStop();
+        SimulationConfig.disableSimulation();
     }
 
     @FXML
-    private void simulationReset(MouseEvent event) {
+    public void simulationReset() {
         System.out.println("Simulation reset");
-        grawitex.simulationReset();
+        simRunner.resetTime();
     }
 
     @FXML

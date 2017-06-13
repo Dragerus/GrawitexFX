@@ -10,6 +10,8 @@ package grawitexfx;
  * @author adam
  */
 public final class SimulationConfig {
+    
+    public static Universe universe = new Universe();
 
     private static boolean canRun = false;
     private static double simulationDuration;
@@ -80,10 +82,10 @@ public final class SimulationConfig {
         }
     }
     
-    public boolean isValid() {
-        return SimulationConfig.getSimulationDuration() <= 0.0
-                || SimulationConfig.getSimulationTimeStep() <= 0.0
-                || SimulationConfig.getSimulationTimeStep() >= SimulationConfig.getSimulationDuration();
+    public static boolean isValid() {
+        return SimulationConfig.getSimulationDuration() > 0.0
+                || SimulationConfig.getSimulationTimeStep() > 0.0
+                || SimulationConfig.getSimulationTimeStep() < SimulationConfig.getSimulationDuration();
     }
 
     public static double getSimulationRealSpeedModifier() {
