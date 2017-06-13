@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,40 +24,28 @@ import javafx.stage.Stage;
  * @author szymon
  */
 public class Grawitex extends Application {
+    @Override
+    public void start(Stage stage) throws Exception {
+//        try {
+            Parent root = FXMLLoader.load(getClass().getResource("Root.fxml"));
+            
+            Scene scene = new Scene(root);
+            stage.setTitle("GrawitexFX");
+            stage.setScene(scene);
+            stage.show();
+//        } catch (IOException iOException) {
+//            System.err.println("Couldn't open FXML");
+//        }
+    }
+    
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
     
     public Universe universe = new Universe(); /* TODO: potatoes gonna potatoe */
     SimulationRunner simRunner = new SimulationRunner(universe);
 
-    private static final Map<String, SimulationConfig.TimeUnit> timeUnitMap;
-     static {
-        timeUnitMap = new HashMap<>();
-        timeUnitMap.put("sekund", SimulationConfig.TimeUnit.Seconds);
-        timeUnitMap.put("dni", SimulationConfig.TimeUnit.Days);
-        timeUnitMap.put("lat", SimulationConfig.TimeUnit.Years);
-    }
-    
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Root.fxml"));
-        
-        Scene scene = new Scene(root);
-        stage.setTitle("GrawitexFX");
-        stage.setScene(scene);
-        stage.show();
-
-    }
-
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        //System.out.println("Hello world");    
-        launch(args);
-       
-    }
-
-    
     public Object importDataFromFile() {
         //System.out.println("Import data from file");
         try {
@@ -106,9 +95,9 @@ public class Grawitex extends Application {
     }
     
     public boolean simulationConfigIsValid() {
-        return SimulationConfig.getSimulationDuration() <= 0.0
-                || SimulationConfig.getSimulationTimeStep() <= 0.0
-                || SimulationConfig.getSimulationTimeStep() >= SimulationConfig.getSimulationDuration();
+        return SimulationConfig.getSimulationDuration() > 0.0
+                || SimulationConfig.getSimulationTimeStep() > 0.0
+                || SimulationConfig.getSimulationTimeStep() < SimulationConfig.getSimulationDuration();
     }
     
     private void displayError(String header, String content) {

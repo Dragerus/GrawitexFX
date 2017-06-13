@@ -27,20 +27,6 @@ public class SimulationRunner {
 
         while (SimulationConfig.getSimulationTimeStep() * iteration < SimulationConfig.getSimulationDuration() && SimulationConfig.canRun()) {
 
-            /* update logic moved to universe
-            for (Planet x : (ArrayList<Planet>) universe.getPlanets()) {
-
-                for (Planet y : (ArrayList<Planet>) universe.getPlanets()) {
-                    if (x != y) {
-                        // it`s pointless to calculate gravitation to self
-                        x.calculateGravity(y);
-                    }
-                    System.out.println("t(" + iteration + ")" + x.getName() + " " + y.getName());
-                }
-            }
-            for (Planet x : (ArrayList<Planet>) universe.getPlanets()) {
-                x.updateState(SimulationConfig.getSimulationTimeStep());
-            }*/
             universe.updatePlanets();
             universe.packEnergyData();
             iteration += 1;

@@ -7,27 +7,33 @@ package grawitexfx;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Observable;
+import javafx.beans.value.ObservableValue;
 
 /**
  *
  * @author szymon
  */
 public class Universe extends Observable {
-    private ArrayList<Planet> PlanetsTable = new ArrayList<>();
+    private ArrayList<Planet> planetsTable = new ArrayList<>();
     private ArrayList< Double > PlanetsEnergyData = new ArrayList<>();
+
     
     void setPlanets(ArrayList<Planet> Planets){
-        this.PlanetsTable = Planets;
+        System.out.println("SET PLANETS CALLED");
+        this.planetsTable = Planets;
+        setChanged();
+        notifyObservers();
     }
     
-    Object getPlanets(){
-        return this.PlanetsTable;
+    Collection<Planet> getPlanets(){
+        return this.planetsTable;
     }
     void packEnergyData(){
         double potential = 0;
         double kinetic = 0;
-        for(Planet planet: PlanetsTable){
+        for(Planet planet: planetsTable){
             potential += planet.getPotentialEnergy();
             kinetic += planet.getKineticEnergy(); /* just in case we would need it later */
             PlanetsEnergyData.add(potential + kinetic);
@@ -37,16 +43,17 @@ public class Universe extends Observable {
     }
     
     void updatePlanets() {
-        for(Planet planet : PlanetsTable) {
-            for(Planet otherPlanet : PlanetsTable) {
+        for(Planet planet : planetsTable) {
+            for(Planet otherPlanet : planetsTable) {
                 planet.calculateGravity(otherPlanet);
                 planet.calculatePotentialEnergy(otherPlanet);
                 planet.calculateKineticEnergy();
             }
         }
-        for(Planet planet : PlanetsTable) {
+        for(Planet planet : planetsTable) {
             planet.updateState(SimulationConfig.getSimulationTimeStep());
         }
         setChanged();
+        notifyObservers();
     }
 }
