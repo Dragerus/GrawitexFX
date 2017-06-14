@@ -144,7 +144,7 @@ public class RootView implements Initializable {
     
     private void displayError(String header, String content) {
         Alert simulationConfigErrorAlert = new Alert(Alert.AlertType.ERROR);
-        simulationConfigErrorAlert.setTitle("Błąd");
+        simulationConfigErrorAlert.setTitle("Uwaga!");
         simulationConfigErrorAlert.setHeaderText(header);
         simulationConfigErrorAlert.setContentText(content);
         simulationConfigErrorAlert.showAndWait();
