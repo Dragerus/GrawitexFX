@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -129,8 +127,8 @@ public class RootView implements Initializable {
             }
         });
         
-        setSimulationDuration((MouseEvent)null);
-        setSimulationTimeStep((MouseEvent)null);
+        setSimulationDuration(null);
+        setSimulationTimeStep(null);
         SimulationConfig.setSimulationRealSpeedModifier(50.0);
 
 
@@ -199,7 +197,6 @@ public class RootView implements Initializable {
             this.displayError("Eksport danych do pliku", "Pomyślnie wyeksportowano dane do pliku o nazwie: "+file.getName());
         } catch (IOException e) {
             this.displayError("Błąd podczas eksportu danych", e.getMessage());
-            //e.printStackTrace();
         }
 
     }
@@ -261,7 +258,7 @@ public class RootView implements Initializable {
     }
     
     @FXML
-    private void setSimulationDuration(MouseEvent event) {
+    private void setSimulationDurationWithBox(MouseEvent event) {
         try {
             SimulationConfig.setSimulationDuration(
                     Double.parseDouble(SimTimeText.getText()),
@@ -274,7 +271,7 @@ public class RootView implements Initializable {
     }
 
     @FXML
-    private void setSimulationTimeStep(MouseEvent event) {
+    private void setSimulationTimeStepWithBox(MouseEvent event) {
         try {
             SimulationConfig.setSimulationTimeStep(
                     Double.parseDouble(SimStepText.getText()),

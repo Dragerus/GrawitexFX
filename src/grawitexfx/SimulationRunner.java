@@ -56,17 +56,20 @@ public class SimulationRunner {
 
     public SimulationRunner(Universe universe) {
         this.universe = universe;
-        this.simulationThread = new Thread(new Simulation());
+        this.simulation = new Simulation();
+        this.simulationThread = new Thread(this.simulation);
     }
 
     public void resetTime() {
+        simulation.reset();
     }
 
     public void simulate() {
         running = true;
         switch(simulationThread.getState()) {
             case NEW:
-                simulationThread.start();
+                simulationThread.run();
+                //simulationThread.start(); - concurrent version
                 break;
             case WAITING:
                 simulationThread.interrupt();
