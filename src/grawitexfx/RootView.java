@@ -22,12 +22,14 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -111,10 +113,10 @@ public class RootView implements Initializable {
         
         /* EnergyChart ^ */
         SimTimeChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
-        //SimTimeChoice.getSelectionModel().selectFirst();
+        SimTimeChoice.getSelectionModel().selectLast();
 
         SimStepChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
-        //SimStepChoice.getSelectionModel().selectFirst();
+        SimStepChoice.getSelectionModel().selectLast();
 
         SimulationSpeedSlider.valueProperty().addListener(new ChangeListener() {
             @Override
@@ -127,7 +129,35 @@ public class RootView implements Initializable {
         setSimulationTimeStep(null);
         SimulationConfig.setSimulationRealSpeedModifier(50.0);
 
-
+//        SimTimeChoice.selectionModelProperty().addListener(new ChangeListener<SingleSelectionModel<String>>() {
+//            @Override
+//            public void changed(ObservableValue<? extends SingleSelectionModel<String>> observable,
+//                    SingleSelectionModel<String> oldValue, SingleSelectionModel<String> newValue) {
+//                throw new RuntimeException("HUJ!");
+//            }
+//        });
+//        SimStepChoice.selectionModelProperty().addListener(new ChangeListener<SingleSelectionModel<String>>() {
+//            @Override
+//            public void changed(ObservableValue<? extends SingleSelectionModel<String>> observable,
+//                    SingleSelectionModel<String> oldValue, SingleSelectionModel<String> newValue) {
+//                throw new RuntimeException("HUJ!");
+//            }
+//        });
+        
+        SimStepChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                setSimulationTimeStepWithBox();
+            }
+            
+        });
+        SimTimeChoice.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                setSimulationDurationWithBox();
+            }
+            
+        });
 
         NazwaPlanetyColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         MasaPlanetyColumn.setCellValueFactory(new PropertyValueFactory<>("mass"));
@@ -227,12 +257,14 @@ public class RootView implements Initializable {
     }
 
     @FXML
-    private void setSimulationTimeStep(InputMethodEvent event) {
+    private void setSimulationTimeStep(KeyEvent event) {
         try {
             SimulationConfig.setSimulationTimeStep(
                     Double.parseDouble(SimStepText.getText()),
                     timeUnitMap.get(SimStepChoice.getSelectionModel().getSelectedItem())
             );
+            System.out.println(SimStepText.getText());
+            System.out.println(SimStepChoice.getSelectionModel().getSelectedItem());
         } catch (NumberFormatException e) {
         }
         catch(Exception e){
@@ -240,37 +272,41 @@ public class RootView implements Initializable {
     }
     
     @FXML
-    private void setSimulationDuration(InputMethodEvent event) {
+    private void setSimulationDuration(KeyEvent event) {
         try {
             SimulationConfig.setSimulationDuration(
                     Double.parseDouble(SimTimeText.getText()),
                     timeUnitMap.get(SimTimeChoice.getSelectionModel().getSelectedItem())
             );
+            System.out.println(SimTimeText.getText());
+            System.out.println(SimTimeChoice.getSelectionModel().getSelectedItem());
         } catch (NumberFormatException e) {
         }
     }
     
-    @FXML
-    private void setSimulationDurationWithBox(MouseEvent event) {
+    private void setSimulationDurationWithBox() {
         try {
             SimulationConfig.setSimulationDuration(
                     Double.parseDouble(SimTimeText.getText()),
                     timeUnitMap.get(SimTimeChoice.getSelectionModel().getSelectedItem())
             );
+            System.out.println(SimTimeText.getText());
+            System.out.println(SimTimeChoice.getSelectionModel().getSelectedItem());
         } catch (NumberFormatException e) {
-        }
-        catch(Exception e){
+            System.out.println("e!");
         }
     }
 
-    @FXML
-    private void setSimulationTimeStepWithBox(MouseEvent event) {
+    private void setSimulationTimeStepWithBox() {
         try {
             SimulationConfig.setSimulationTimeStep(
                     Double.parseDouble(SimStepText.getText()),
                     timeUnitMap.get(SimStepChoice.getSelectionModel().getSelectedItem())
             );
+            System.out.println(SimStepText.getText());
+            System.out.println(SimStepChoice.getSelectionModel().getSelectedItem());
         } catch (NumberFormatException e) {
+            System.out.println("e!");
         }
     }
 

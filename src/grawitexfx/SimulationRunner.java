@@ -38,7 +38,7 @@ public class SimulationRunner {
                     if(SimulationConfig.getSimulationTimeStep() * iteration >= SimulationConfig.getSimulationDuration()) {
                         stop();
                         iteration = 0;
-                        System.out.println("Wysymulował");                   
+                        System.out.println("Done");                   
                         energyAnalyzer.publishDataOnChart();                        
                     }
                     
