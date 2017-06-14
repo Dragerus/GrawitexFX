@@ -42,7 +42,7 @@ public class VisualisationRenderer implements Observer {
         recalculateCameraProperties();
         scene.setCamera(camera);
         scene.setFill(null);
-        AmbientLight light = new AmbientLight(Color.GRAY);
+        AmbientLight light = new AmbientLight(Color.WHITE);
         PointLight pointLight = new PointLight(Color.WHITE);
         group.getChildren().addAll(light, pointLight, planetGroup);
         
@@ -68,34 +68,37 @@ public class VisualisationRenderer implements Observer {
     }
     
     private void recalculateCameraProperties() {
-//        double minZ = 0.0, maxZ = 0.0;
-//
-//        if(universe.getPlanets().size() == 1)
-//            maxZ = minZ = universe.getPlanets().iterator().next().getZ();
-//        else if(universe.getPlanets().size() >= 2) {
-//            minZ = universe.getPlanets().stream().min(
-//                    (first, second) -> Double.compare(first.getZ(), second.getZ())
-//            ).get().getZ();
-//            maxZ = universe.getPlanets().stream().max(
-//                    (first, second) -> Double.compare(first.getZ(), second.getZ())
-//            ).get().getZ();
-//        }
-//        
-//        camera.setTranslateZ(-Math.abs(10.0 * minZ - 500.0));
-//        camera.setNearClip(0.1);
-//        camera.setFarClip(Math.abs(maxZ * 10.0 + 10000.0));
+        double minZ = 0.0, maxZ = 0.0;
+
+        if(universe.getPlanets().size() == 1)
+            maxZ = minZ = universe.getPlanets().iterator().next().getZ();
+        else if(universe.getPlanets().size() >= 2) {
+            minZ = universe.getPlanets().stream().min(
+                    (first, second) -> Double.compare(first.getZ(), second.getZ())
+            ).get().getZ();
+            maxZ = universe.getPlanets().stream().max(
+                    (first, second) -> Double.compare(first.getZ(), second.getZ())
+            ).get().getZ();
+        }
         
-        camera.setTranslateZ(-500.0);
+        camera.setTranslateZ(-Math.abs(10.0 * minZ - 500.0));
         camera.setNearClip(0.1);
-        camera.setFarClip(10000.0);
+        camera.setFarClip(Math.abs(maxZ * 10.0 + 10000.0));
+        
+//        camera.setTranslateZ(-500.0);
+//        camera.setNearClip(0.1);
+//        camera.setFarClip(10000.0);
     }
     
     @Override
     public void update(Observable o, Object arg) { 
         scene.setFill(Color.BLACK);
         planetGroup.getChildren().clear();
+        meshes.clear();
         for(Planet planet : universe.getPlanets()) {
-            Sphere planetMesh = new Sphere((scene.getHeight()) / 30.0);
+            Sphere planetMesh = new Sphere(
+                    (camera.getTranslateZ() + planet.getZ())
+                    / scene.getWidth() + 5.0);
             planetMesh.setMaterial(redMaterial);
             planetMesh.setTranslateX(planet.getX());
             planetMesh.setTranslateY(planet.getY());

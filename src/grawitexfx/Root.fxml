@@ -43,8 +43,8 @@
                   <ChoiceBox fx:id="SimStepChoice" layoutX="379.0" layoutY="116.0" onMouseClicked="#setSimulationTimeStepWithBox" prefWidth="150.0" />
                   <Label layoutX="3.0" layoutY="121.0" text="Krok czasowy symulacji:" />
                   <Label layoutX="57.0" layoutY="69.0" text="Czas symulacji: " />
-                  <TextField fx:id="SimStepText" layoutX="187.0" layoutY="116.0" onInputMethodTextChanged="#setSimulationTimeStep" text="0.25" />
-                  <TextField fx:id="SimTimeText" layoutX="187.0" layoutY="64.0" onInputMethodTextChanged="#setSimulationDuration" text="100" />
+                  <TextField fx:id="SimStepText" layoutX="187.0" layoutY="116.0" onInputMethodTextChanged="#setSimulationTimeStep" />
+                  <TextField fx:id="SimTimeText" layoutX="187.0" layoutY="64.0" onInputMethodTextChanged="#setSimulationDuration" />
                </children></AnchorPane>
       </content>
     </Tab>

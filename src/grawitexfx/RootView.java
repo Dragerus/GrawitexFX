@@ -111,10 +111,10 @@ public class RootView implements Initializable {
         
         /* EnergyChart ^ */
         SimTimeChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
-        SimTimeChoice.getSelectionModel().selectFirst();
+        //SimTimeChoice.getSelectionModel().selectFirst();
 
         SimStepChoice.setItems(FXCollections.observableArrayList(timeUnitMap.keySet()));
-        SimStepChoice.getSelectionModel().selectFirst();
+        //SimStepChoice.getSelectionModel().selectFirst();
 
         SimulationSpeedSlider.valueProperty().addListener(new ChangeListener() {
             @Override
