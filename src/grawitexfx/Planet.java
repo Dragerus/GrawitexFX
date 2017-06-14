@@ -6,10 +6,8 @@
 package grawitexfx;
 
 import java.util.Objects;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 /**
  *
@@ -18,11 +16,11 @@ import javafx.beans.property.StringProperty;
 public class Planet {
     public static final double GRAVITATIONAL_CONSTANT = 6.67408313131313131313131e-11;
     
-    private String name;
+    private final String name;
     private Vector velocity;
     private Vector position;
     private Vector acceleration;
-    private double mass;
+    private final double mass;
     private double potential_energy;
     private Vector kinetic_energy; 
     

@@ -30,8 +30,8 @@ public class PlanetDataWriter {
             output.close();
             
             
-        } catch ( Exception e ) {
-            e.printStackTrace();
+        } catch ( IOException e ) {
+            System.err.println(e.getMessage());
         }
         
     }

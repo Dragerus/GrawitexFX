@@ -66,7 +66,7 @@ public class PlanetDataReader {
             
         }
         catch(IOException e){
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
 
         return Planets;

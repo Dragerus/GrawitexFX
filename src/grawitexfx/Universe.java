@@ -44,7 +44,7 @@ public class Universe extends Observable {
     
     public ArrayList<Double> getEnergyData(){ return this.PlanetsEnergyData; }
    
-    void updatePlanets() {
+    public void updatePlanets() {
         for(Planet planet : planetsTable) {
             for(Planet otherPlanet : planetsTable) {
                 planet.calculateGravity(otherPlanet);
