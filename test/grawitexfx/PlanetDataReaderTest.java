@@ -5,10 +5,27 @@
  */
 package grawitexfx;
 
+import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
 /**
  *
  * @author szymon
  */
 public class PlanetDataReaderTest {
-    
+        
+    public PlanetDataReaderTest() {}
+        
+    @Test
+    public void standardFormatFileRead(){
+        PlanetDataReader pdr = new PlanetDataReader();
+        ArrayList<Planet> planet_list;
+        planet_list = pdr.readPlanets("./data/small_data.in");
+        
+        assertEquals(planet_list.get(1).getName(), "Mercury");
+        assertEquals(planet_list.get(0).getName(), "Sun");
+        assertEquals(planet_list.get(2).getPosition(), new Vector(9.0, 5.0, -4.0));
+        //assertEquals();
+    }
 }
