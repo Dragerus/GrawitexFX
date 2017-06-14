@@ -108,8 +108,8 @@ public class VisualisationRenderer implements Observer {
         recalculateCameraProperties();
         scene.setCamera(camera);
         
-        for(Planet planet : universe.getPlanets()) {
+        /*for(Planet planet : universe.getPlanets()) {
             System.out.println(planet.toString());
-        }
+        }*/
     }
 }

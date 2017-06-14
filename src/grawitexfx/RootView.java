@@ -38,12 +38,17 @@ import javafx.stage.Stage;
  * @author szymon
  */
 public class RootView implements Initializable {
-
+    final NumberAxis xAxis = new NumberAxis();
+    final NumberAxis yAxis = new NumberAxis();
+    final LineChart<Number,Number> lineChart = 
+                new LineChart<Number,Number>(xAxis,yAxis);
+    
     public Universe universe = new Universe();
     private SimulationRunner simRunner = new SimulationRunner(universe);
     private VisualisationRenderer renderer;
     private boolean simSpeedActualiseEnabled = false;
-
+    private EnergyAnalyzer energyAnalyzer = new EnergyAnalyzer(this.universe, this.lineChart);
+    
     private static final Map<String, TimeUnit> timeUnitMap;
     static {
         timeUnitMap = new HashMap<>();
@@ -91,17 +96,10 @@ public class RootView implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         /* EnergyChart v  */
-       // EnergyChart.setTitle("Energia układu planet");
 
-        //defining the axes
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Iteracja");
-        //creating the chart
-        final LineChart<Number,Number> lineChart = 
-                new LineChart<Number,Number>(xAxis,yAxis);
-                
         lineChart.setTitle("Energia układu planet");
+        
         //defining a series
         XYChart.Series series = new XYChart.Series();
         series.setName("Pomiar energii");
@@ -215,9 +213,6 @@ public class RootView implements Initializable {
         } else {
             SimulationConfig.enableSimulation();
             simRunner.simulate();
-            EnergyAnalyzer EnergyAnalyzer = new EnergyAnalyzer();
-            XYChart.Series<Integer, Double> EnergyData = new XYChart.Series<>();
-            EnergyData = EnergyAnalyzer.getDataSeries( universe.getEnergyData() );
         }
     }
 
