@@ -18,6 +18,7 @@ import javafx.beans.value.ObservableValue;
 public class Universe extends Observable {
     private ArrayList<Planet> planetsTable = new ArrayList<>();
     private ArrayList< Double > PlanetsEnergyData = new ArrayList<>();
+    
 
     
     void setPlanets(ArrayList<Planet> Planets){
@@ -39,10 +40,14 @@ public class Universe extends Observable {
             
             //System.out.println("Energia: "+ (potential+kinetic));
         }
-        PlanetsEnergyData.add(potential + kinetic);
+        PlanetsEnergyData.add( potential + kinetic );
+        //PlanetsEnergyData.add( (potential)/1e30 );
     }
     
-    public ArrayList<Double> getEnergyData(){ return this.PlanetsEnergyData; }
+    public ArrayList<Double> getEnergyData(){
+        ArrayList<Double> tmp = (ArrayList<Double> )this.PlanetsEnergyData.clone();  
+        tmp.remove(0); /* first one is 0 [J] */
+        return tmp; }
    
     public void updatePlanets() {
         for(Planet planet : planetsTable) {

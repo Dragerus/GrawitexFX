@@ -40,14 +40,15 @@ import javafx.stage.Stage;
 public class RootView implements Initializable {
     final NumberAxis xAxis = new NumberAxis();
     final NumberAxis yAxis = new NumberAxis();
-    final LineChart<Number,Number> lineChart = 
-                new LineChart<Number,Number>(xAxis,yAxis);
-    
+    final LineChart<Number, Number> lineChart = 
+                new LineChart<>(xAxis,yAxis);
     public Universe universe = new Universe();
-    private SimulationRunner simRunner = new SimulationRunner(universe);
+    public  EnergyAnalyzer energyAnalyzer = new EnergyAnalyzer(this.universe, this.lineChart);
+    
+    private SimulationRunner simRunner = new SimulationRunner(universe, this.energyAnalyzer);
     private VisualisationRenderer renderer;
     private boolean simSpeedActualiseEnabled = false;
-    private EnergyAnalyzer energyAnalyzer = new EnergyAnalyzer(this.universe, this.lineChart);
+    
     
     private static final Map<String, TimeUnit> timeUnitMap;
     static {
@@ -96,15 +97,12 @@ public class RootView implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         /* EnergyChart v  */
-
         xAxis.setLabel("Iteracja");
         lineChart.setTitle("Energia układu planet");
         
         //defining a series
         XYChart.Series series = new XYChart.Series();
-        series.setName("Pomiar energii");
-        //populating the series with data
-       /* ;*/
+        //series.setName("Pomiar energii");
         
         panelProba.getChildren().add(lineChart);
         //Scene scene  = new Scene(lineChart,800,600);

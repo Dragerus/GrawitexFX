@@ -104,7 +104,7 @@ public class VisualisationRenderer implements Observer {
         }
         
         planetGroup.getChildren().addAll(meshes);
-        System.out.println("Renderer updated");
+       // System.out.println("Renderer updated");
         recalculateCameraProperties();
         scene.setCamera(camera);
         

@@ -9,6 +9,7 @@ import java.util.logging.Logger;
  * @author szymon
  */
 public class SimulationRunner {
+    EnergyAnalyzer energyAnalyzer;
     protected boolean running;
     
     private class Simulation implements Runnable {
@@ -36,7 +37,9 @@ public class SimulationRunner {
                 universe.updatePlanets();
                 universe.packEnergyData();
                 iteration++;
-                System.out.println(iteration+"_Kolejna iteracja");
+                //System.out.println("");
+                
+                //System.out.println(iteration+"_Kolejna iteracja - "+ universe.getEnergyData().get(universe.getEnergyData().size()-1));
                 /*   
                 try {
                     TimeUnit.SECONDS.sleep(3);
@@ -45,7 +48,8 @@ public class SimulationRunner {
                 }
                  */
             }
-            
+            System.out.println("Wysymulował");                   
+            energyAnalyzer.publishDataOnChart();
             iteration = 0;
         }
     }
@@ -54,10 +58,11 @@ public class SimulationRunner {
     private Simulation simulation;
     private Thread simulationThread;
 
-    public SimulationRunner(Universe universe) {
+    public SimulationRunner(Universe universe, EnergyAnalyzer energyAnalyzer) {
         this.universe = universe;
         this.simulation = new Simulation();
         this.simulationThread = new Thread(this.simulation);
+        this.energyAnalyzer = energyAnalyzer;
     }
 
     public void resetTime() {

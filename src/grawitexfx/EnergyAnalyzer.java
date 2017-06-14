@@ -6,6 +6,8 @@
 package grawitexfx;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 
@@ -23,7 +25,7 @@ public class EnergyAnalyzer {
         this.chart = chart;
     }
     
-    public XYChart.Series<Integer, Double> getDataSeries(ArrayList<Double> data){
+    public XYChart.Series<Number, Number> getDataSeries(ArrayList<Double> data){
         XYChart.Series series = new XYChart.Series();
         int i = 0;
         for (Double x: data){
@@ -46,8 +48,25 @@ public class EnergyAnalyzer {
         return series;
     }
     
-    public void publishDataOnChart(XYChart<Integer, Double> series){
-  
+    public void publishDataOnChart(){
+        //System.out.println("Iteracji:"+ universe.getEnergyData().size());
+        //System.out.println("Energie układu: "+ universe.getEnergyData() );
+        ArrayList<Double> data = universe.getEnergyData();
+        ArrayList<Double> tmp = (ArrayList<Double>)data.clone();
+        Collections.sort(tmp, new Comparator<Double>(){
+            public int compare(Double d1, Double d2){
+            if(d1 > d2)return 1;
+            else if(d1 == d2)return 0;
+            return -1;}
+        });
+        double mean = tmp.get( (int)(tmp.size()/2) );
+        //System.out.println("Mean:"+mean);
+        for(int i = 0; i< data.size(); i++){
+            data.set(i, data.get(i)/mean);
+        }
+        //System.out.println("Energie układu: "+ data );
+        this.chart.getData().add( this.getDataSeries( data ) );
+        this.chart.getYAxis().setLabel("Energia \n*"+mean);
         
         /*XYChart.Series<Integer, Double> EnergyData = new XYChart.Series<>();
         EnergyData = this.getDataSeries( universe.getEnergyData() );*/
